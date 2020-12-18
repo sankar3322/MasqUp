@@ -100,10 +100,10 @@ public class TilesController : MonoBehaviour
         GameObject referenceFile = (GameObject)Instantiate(Resources.Load("1"));
      
 
-        Sprite greenSprite = Resources.Load("green", typeof(Sprite)) as Sprite;
+        Sprite greenSprite = Resources.Load("locked", typeof(Sprite)) as Sprite;
         Sprite doorSprite = Resources.Load("door", typeof(Sprite)) as Sprite;
         Sprite keySprite = Resources.Load("key", typeof(Sprite)) as Sprite;
-        Sprite stone = Resources.Load("stone", typeof(Sprite)) as Sprite;
+        Sprite stone = Resources.Load("block", typeof(Sprite)) as Sprite;
 
 
         for (int row =0; row<rows;row++)

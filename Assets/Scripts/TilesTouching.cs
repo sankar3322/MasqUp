@@ -11,13 +11,13 @@ public class TilesTouching : MonoBehaviour
 
     public void OnMouseDown()
     {
-        Sprite greenSprite = Resources.Load("green", typeof(Sprite)) as Sprite;
-        Sprite sand = Resources.Load("sand", typeof(Sprite)) as Sprite;
+        Sprite greenSprite = Resources.Load("locked", typeof(Sprite)) as Sprite;
+        Sprite sand = Resources.Load("opened", typeof(Sprite)) as Sprite;
         Sprite keySprite = Resources.Load("key", typeof(Sprite)) as Sprite;
-        Sprite stone = Resources.Load("stone", typeof(Sprite)) as Sprite;
+        Sprite stone = Resources.Load("block", typeof(Sprite)) as Sprite;
 
         Sprite coinSprite = Resources.Load("coin", typeof(Sprite)) as Sprite;
-
+        Sprite openDoor = Resources.Load("doorOpened", typeof(Sprite)) as Sprite; 
         Sprite civilianSprite = Resources.Load("civilian", typeof(Sprite)) as Sprite;
 
         string name = gameObject.name;
@@ -59,7 +59,7 @@ public class TilesTouching : MonoBehaviour
         {
             isKey = true;
             disableList.Add(32);
-            GameObject.Find(32.ToString()).GetComponent<SpriteRenderer>().color = Color.green;
+            GameObject.Find(32.ToString()).GetComponent<SpriteRenderer>().sprite = openDoor;
             Debug.Log("Key Success");
            
             
