@@ -2,32 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class TilesController : MonoBehaviour
 {
-
-
     private int rows = 7;
     private int cols = 5;
     private float tileSize = 1.15f;
     int tileName = 0;
+
     public Text levelText;
     public List<int> disableList;
-   
+    
     List<int> randomNumber = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,22, 23, 24,25,26,27,28,29,30,31,33,34};
 
     // Start is called before the first frame update
     void Start()
     {
         GenerateGrid();
-
     }
-
-    private void GenerateGrid()
+    
+    public void GenerateGrid()
     {
-
         if (PlayerPrefs.GetInt("Level").Equals(0))
         {
             PlayerPrefs.SetInt("Level", 1);
@@ -141,6 +139,7 @@ public class TilesController : MonoBehaviour
                     else
                     {
                         tile.GetComponent<SpriteRenderer>().sprite = greenSprite;
+                        tile.GetComponent<VisualController>().isUnlocked = true;
                     }
 
                     disableList.Remove(c1);
@@ -150,7 +149,8 @@ public class TilesController : MonoBehaviour
                 }
 
                 tile.transform.position = new Vector2(posX,posY);
-            
+                tile.GetComponent<VisualController>().delay = 0.5f + (tileName * .075f);
+                tile.GetComponent<VisualController>().Show();
             }
         }
         Destroy(referenceFile);
@@ -160,20 +160,13 @@ public class TilesController : MonoBehaviour
         float gridH = rows * tileSize;
 
        // transform.position = new Vector2(-gridW/2+tileSize/2,gridH/2-tileSize/2);
+
     }
 
 
     public void Reload() {
 
-        Application.LoadLevel(0);
+        SceneManager.LoadScene(0);
         PlayerPrefs.SetInt("Level", 1);
     }
-
-
-     void Update()
-    {
-      
-
-    }
-
 }
