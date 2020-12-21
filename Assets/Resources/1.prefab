@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4132458152553265342}
   - component: {fileID: 4182975922360207317}
   - component: {fileID: 1468187105}
+  - component: {fileID: 1692436183792292737}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1023538968527713779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2892, y: 1.2892, z: 1.2892}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -100,7 +101,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.024, y: 1.024}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -121,3 +122,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56bac3dc4a3b9274abd9adc45b134c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1692436183792292737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023538968527713779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1442dfd91b77542e48a03fd7365b6e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5
+  openDuration: 0.33
+  closeDuration: 0.1
+  punchScale: 1
+  openEase: 27
+  closeEase: 1
+  activeAtStart: 0
+  disableOnClick: 0
+  isPulsing: 0
+  appearSFX: []
+  pressSFX: []
+  isUnlocked: 0
+  isClicked: 0
+  audioClips:
+  - {fileID: 8300000, guid: 74ed748ded9ed4ad5b73f71dd28f89d8, type: 3}
+  - {fileID: 8300000, guid: 585c53c5433ca4c62b2c7618323298d8, type: 3}
+  - {fileID: 8300000, guid: 33bb20c794987490c951d8c3fc1b4555, type: 3}
+  - {fileID: 8300000, guid: 3f3112f8d621c4fe1ab194b38a65159e, type: 3}
+  - {fileID: 8300000, guid: 0db7693a02e314451b17998bd8ca4371, type: 3}
+  audioSource: {fileID: 0}
