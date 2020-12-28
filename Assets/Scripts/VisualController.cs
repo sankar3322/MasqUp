@@ -13,6 +13,8 @@ public class VisualController : MonoBehaviour
     [SerializeField] bool activeAtStart, disableOnClick, isPulsing;
     [SerializeField] List<AudioClip> appearSFX, pressSFX;
 
+  
+
     public delegate void PressedEvent(VisualController vc);
     public PressedEvent OnPressed;
 
@@ -82,7 +84,7 @@ public class VisualController : MonoBehaviour
     public void Clicked()
     {
         if (!isEnabled) return;
-        if (punchScale != 0) DOTween.Sequence().Append(transform.DOPunchScale(Vector3.one * punchScale, 0.3f)).AppendCallback(() => isClicked = true);
+        if (punchScale != 0) DOTween.Sequence().Append(transform.DOPunchScale(Vector3.one * punchScale, 0.3f));
         if (disableOnClick) isEnabled = false;
         OnPressed?.Invoke(this);
     }
@@ -94,5 +96,9 @@ public class VisualController : MonoBehaviour
         DOTween.Sequence()
             .Append(transform.DOPunchScale(Vector3.one * punchScale * 3, 1f, vibrato: 1, elasticity: 5f))
             .AppendInterval(0.1f).SetLoops(-1);
+
+
+
+       
     }
 }

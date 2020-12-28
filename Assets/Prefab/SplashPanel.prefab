@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -100,7 +101,9 @@ MonoBehaviour:
   pressSFX: []
   isUnlocked: 0
   isClicked: 0
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: 4a75c67b3f3f03648a952866d8cab3c3, type: 3}
+  - {fileID: 8300000, guid: 74ed748ded9ed4ad5b73f71dd28f89d8, type: 3}
   audioSource: {fileID: 0}
 --- !u!1 &9124133668211304582
 GameObject:
@@ -167,6 +170,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -193,7 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6dda400f2714f3a96cae8db943b059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 134304105}
   startBtn: {fileID: 9124133668882431686}
 --- !u!82 &134304105
 AudioSource:
@@ -205,11 +208,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2cf687079b2764902a52cc4e23c35781, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -352,6 +355,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -380,18 +384,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.75
   openDuration: 0.33
-  closeDuration: 0.1
+  closeDuration: 0
   punchScale: 0
   openEase: 27
   closeEase: 1
   activeAtStart: 1
   disableOnClick: 0
-  isPulsing: 0
+  isPulsing: 1
   appearSFX: []
   pressSFX: []
   isUnlocked: 0
   isClicked: 0
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: 4a75c67b3f3f03648a952866d8cab3c3, type: 3}
+  - {fileID: 8300000, guid: 74ed748ded9ed4ad5b73f71dd28f89d8, type: 3}
   audioSource: {fileID: 0}
 --- !u!1 &9124133668882431739
 GameObject:
@@ -455,6 +461,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -525,10 +532,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
-  openDuration: 0.33
-  closeDuration: 0.1
-  punchScale: 0.25
-  openEase: 27
+  openDuration: 0
+  closeDuration: 0.005
+  punchScale: 0.1
+  openEase: 26
   closeEase: 1
   activeAtStart: 1
   disableOnClick: 0
@@ -537,5 +544,7 @@ MonoBehaviour:
   pressSFX: []
   isUnlocked: 0
   isClicked: 0
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: 4a75c67b3f3f03648a952866d8cab3c3, type: 3}
+  - {fileID: 8300000, guid: 74ed748ded9ed4ad5b73f71dd28f89d8, type: 3}
   audioSource: {fileID: 0}
