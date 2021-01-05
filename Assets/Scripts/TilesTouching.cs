@@ -386,15 +386,15 @@ public class TilesTouching : MonoBehaviour
         KeyAnimObj.transform.DOScale(2f, 1);
 
         DOTween.Sequence()
-           .Append(KeyAnimObj.transform.DOMove(new Vector3(centerPos.transform.position.x, centerPos.transform.position.y, -0.4f), 2))
+           .Append(KeyAnimObj.transform.DOMove(new Vector3(centerPos.transform.position.x, centerPos.transform.position.y, -0.4f), 0.4f))
            .AppendInterval(0.5f).SetLoops(1);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.4f);
 
         KeyAnimObj.transform.DOScale(0f, 1);
 
-        KeyAnimObj.transform.DOMove(new Vector3(doorPos.transform.position.x, doorPos.transform.position.y, -0.4f), 2);
+        KeyAnimObj.transform.DOMove(new Vector3(doorPos.transform.position.x, doorPos.transform.position.y, -0.4f), 0.4f);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
 
         GameObject.Find(32.ToString()).GetComponent<SpriteRenderer>().sprite = openDoor;
 
