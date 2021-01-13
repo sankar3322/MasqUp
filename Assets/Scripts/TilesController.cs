@@ -10,12 +10,12 @@ public class TilesController : MonoBehaviour
 {
     private int rows = 7;
     private int cols = 5;
-    private float tileSize = 1.15f;
+    private float tileSize = 1.12f;
     int tileName = 0;
 
     public Text levelText;
     public List<int> disableList;
-    
+    public List<int> firstDisbleList;
     List<int> randomNumber = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,22, 23, 24,25,26,27,28,29,30,31,33,34};
 
     // Start is called before the first frame update
@@ -40,6 +40,16 @@ public class TilesController : MonoBehaviour
         int c2 = 32 - 1;
         int c3 = 32 + 1;
         int c4 = 32 + 5;
+
+        if (!firstDisbleList.Contains(c1) && c1 <= 34 && c1 >= 0 && c1 != 32)
+            firstDisbleList.Add(c1);
+        if (!firstDisbleList.Contains(c2) && c2 <= 34 && c2 >= 0 && c2 != 32)
+            firstDisbleList.Add(c2);
+        if (!firstDisbleList.Contains(c3) && c3 <= 34 && c3 >= 0 && c3 != 32)
+            firstDisbleList.Add(c3);
+        if (!firstDisbleList.Contains(c4) && c4 <= 34 && c4 >= 0 && c4 != 32)
+            firstDisbleList.Add(c4);
+
 
         randomNumber.Remove(c1);
         randomNumber.Remove(c2);
@@ -156,17 +166,25 @@ public class TilesController : MonoBehaviour
         Destroy(referenceFile);
 
 
-        float gridW = cols * tileSize;
-        float gridH = rows * tileSize;
+      
 
        // transform.position = new Vector2(-gridW/2+tileSize/2,gridH/2-tileSize/2);
 
     }
 
 
+
+
     public void Reload() {
 
-        SceneManager.LoadScene(0);
+
+        //Application.LoadLevel(1);
+        SceneManager.LoadScene(1);
         PlayerPrefs.SetInt("Level", 1);
+
+        Debug.Log("Reload");
     }
+
+
+    
 }
