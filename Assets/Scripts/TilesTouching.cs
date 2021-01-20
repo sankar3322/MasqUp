@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class TilesTouching : MonoBehaviour
 {
+
+
     bool isKey;
     int level=0;
    
@@ -21,7 +23,9 @@ public class TilesTouching : MonoBehaviour
     int Monster1, Monster2;
 
     ParticleSystem particleSystem;
-    
+
+    int CoinCount = 0, MedicineCount = 0;
+
 
 
 
@@ -32,6 +36,8 @@ public class TilesTouching : MonoBehaviour
         particleSystem.Stop();
          vc = GetComponent<VisualController>();
         vc.OnPressed += _ => OnClicked();
+
+        CoinCount = PlayerPrefs.GetInt("CoinCount");
     }
 
     void OnClicked()
@@ -179,6 +185,9 @@ public class TilesTouching : MonoBehaviour
                 {
                     vc.audioSource.clip = vc.audioClips[1];
                     vc.audioSource.Play();
+                    CoinCount = CoinCount + 1;
+
+                    PlayerPrefs.SetInt("CoinCount", CoinCount);
 
                 }
                 else if (name.Equals(civilian1.ToString()) || name.Equals(civilian2.ToString()))

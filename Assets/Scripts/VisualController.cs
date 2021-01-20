@@ -13,7 +13,10 @@ public class VisualController : MonoBehaviour
     [SerializeField] bool activeAtStart, disableOnClick, isPulsing;
     [SerializeField] List<AudioClip> appearSFX, pressSFX;
 
-  
+
+
+    [SerializeField] private GameObject coinText;
+
 
     public delegate void PressedEvent(VisualController vc);
     public PressedEvent OnPressed;
