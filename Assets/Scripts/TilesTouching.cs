@@ -77,7 +77,7 @@ public class TilesTouching : MonoBehaviour
         string name = gameObject.name;
 
         GameObject go = GameObject.Find("TilesController");
-        //particleSystem.Play();
+        
 
         TilesController tilesController = go.GetComponent<TilesController>();
         disableList = tilesController.disableList;
@@ -85,25 +85,20 @@ public class TilesTouching : MonoBehaviour
         firstDisbleList = tilesController.firstDisbleList;
         unBlockList1 = tilesController.unBlockList1;
         unBlockList2 = tilesController.unBlockList2;
-       // Debug.Log("Name.........." + name);
+     
 
          key = PlayerPrefs.GetInt("Key");
          Monster1 = PlayerPrefs.GetInt("Monster1");
          Monster2 = PlayerPrefs.GetInt("Monster2");
-       // Monster2 =19;
+      
 
-        int coin = PlayerPrefs.GetInt("Coin");
+         int coin = PlayerPrefs.GetInt("Coin");
          civilian1 = PlayerPrefs.GetInt("Civilian1");
          civilian2 = PlayerPrefs.GetInt("Civilian2");
 
-       
-
-
-        //Debug.Log("Key............" + key + ".....monster1........" + Monster1 + "...........monster2..........." + Monster2);
-
         if (name.Equals("32") && disableList.Contains(32))
         {
-          //  Debug.Log("Door Pressed");
+         
             vc.audioSource.clip = vc.audioClips[2];
             vc.audioSource.Play();
             disableList.Remove(32);
@@ -119,7 +114,7 @@ public class TilesTouching : MonoBehaviour
             }
             PlayerPrefs.SetInt("Level", level);
         }
-      //  Debug.Log(isKey);
+      
 
         if (!disableList.Contains(key) && name.Equals(key.ToString()) && !isKey)
         {
@@ -132,38 +127,26 @@ public class TilesTouching : MonoBehaviour
             GameObject.Find(key.ToString()).GetComponent<SpriteRenderer>().sprite = sand;
             GameObject.Find(32.ToString()).GetComponent<VisualController>().isUnlocked = true;
             GameObject.Find(key.ToString()).GetComponent<VisualController>().isUnlocked = false;
-          //  Debug.Log("Key Success");
-
-           
-
+     
             PlayerPrefs.SetInt("Key",1000);
             doorPos = GameObject.Find("32");
 
             centerPos = GameObject.Find("17");
             
-
             keyPos = GameObject.Find(key.ToString());
 
             KeyAnimObj = (GameObject)Instantiate(Resources.Load("KeyObj"));
 
             var KeyPanel = GameObject.Find("AnimKey");
-
-
             KeyAnimObj.transform.SetParent(KeyPanel.transform, false);
 
             KeyAnimObj.transform.position = new Vector3(keyPos.transform.position.x, keyPos.transform.position.y, -0.4f);
 
             StartCoroutine(keyAnimation());
 
-
-           
-
-
         } else if (key==1000 && isKey) {
 
             Debug.Log("Key False");
-
-           
 
         }
         else if (name.Equals(Monster1.ToString()) || (name.Equals(Monster2.ToString())) || name.Equals("32"))
@@ -235,16 +218,11 @@ public class TilesTouching : MonoBehaviour
             }
             GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
         //    Debug.Log("Monster Pressed");
-           // GameObject.Find(name).GetComponent<VisualController>().isClicked = false;
+          
         }
         else
         {
-
-
             firstDisbleList.Remove(int.Parse(name));
-
-
-        //    Debug.Log("Monster Pressed Else ");
 
             if (!disableList.Contains(int.Parse(name)))
             {
@@ -273,11 +251,16 @@ public class TilesTouching : MonoBehaviour
                     vc.audioSource.Play();*/
 
                     GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
-                    //  StartCoroutine(delayPopup(name));
-                    healthSystem.showCivilianFirst();
-                   // StartCoroutine(civilianPopup());
 
-                 
+
+                    if (name.Equals(civilian1.ToString())) {
+
+                        healthSystem.showCivilianFirst("C1");
+                    }
+                    else {
+                        healthSystem.showCivilianFirst("C2");
+
+                    }          
                 }
                 else
                 {
@@ -326,7 +309,6 @@ public class TilesTouching : MonoBehaviour
 
                 }
           
-
 
                 if (!c1.Equals(32) && c1 <= 34 && c1 >= 0 && disableList.Contains(c1) && !c1.Equals(key) && !c1.Equals(Monster1) && !c1.Equals(Monster2))
                 {
@@ -408,8 +390,6 @@ public class TilesTouching : MonoBehaviour
                                         unBlockList1.Add(mList[i]);
 
                                     }
-
-
                                 }
                                 else if (Monster1.ToString().Equals("4") || Monster1.ToString().Equals("9") || Monster1.ToString().Equals("14")
                                   || Monster1.ToString().Equals("19") || Monster1.ToString().Equals("24") || Monster1.ToString().Equals("29"))
@@ -426,8 +406,6 @@ public class TilesTouching : MonoBehaviour
                                         unBlockList1.Add(mList[i]);
 
                                     }
-
-
                                 }
                                 else
                                 {
@@ -536,29 +514,6 @@ public class TilesTouching : MonoBehaviour
 
 
 
-    IEnumerator civilianPopup() {
-
-        healthSystem.showCivilianFirst();
-
-        yield return new WaitForSeconds(2f);
-
-       
-         healthSystem.showCivilianSecond();
-
-    }
-
-    IEnumerator virusPopup()
-    {
-
-        healthSystem.showVirusFirst();
-
-        yield return new WaitForSeconds(2f);
-
-
-        healthSystem.showVirusSecond();
-
-    }
-
 
 
 
@@ -641,7 +596,6 @@ public class TilesTouching : MonoBehaviour
 
     IEnumerator keyAnimation()
     {
-
 
         Sprite openDoor = Resources.Load("doorOpened", typeof(Sprite)) as Sprite;
         KeyAnimObj.transform.DOScale(2f, 1);

@@ -444,11 +444,22 @@ MonoBehaviour:
   defenceText: {fileID: 1979521163}
   civilianSecondStatus: {fileID: 295352072}
   civilianFirstStatus: {fileID: 67190992}
+  civilianFirstMaskProText: {fileID: 1143618888}
+  civilianSecondMaskProText: {fileID: 738846148}
+  chanceOfInfectionText: {fileID: 1723622052}
+  infectedOrNotText: {fileID: 743166452}
+  civilianStatusOneText: {fileID: 2141171452}
+  civilianStatusSecondText: {fileID: 1911879664}
+  civilianTopText: {fileID: 1755295800}
   civilianFirstPopup: {fileID: 340008456}
   civiliainSecondPopup: {fileID: 733732076}
   virusFirstPopup: {fileID: 1285891448}
   virusSecondPopup: {fileID: 1273356935}
   deadPopup: {fileID: 1452660705}
+  civilianFirstImage: {fileID: 2027307406}
+  civilianSecondImage: {fileID: 393749813}
+  continueBtn: {fileID: 2109768774}
+  carryOnBtn: {fileID: 47584174}
 --- !u!4 &39227526
 Transform:
   m_ObjectHideFlags: 0
