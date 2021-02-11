@@ -16,6 +16,9 @@ public class TilesController : MonoBehaviour
     public Text levelText;
     public List<int> disableList;
     public List<int> firstDisbleList;
+
+    public List<int> unBlockList1;
+    public List<int> unBlockList2;
     List<int> randomNumber = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,22, 23, 24,25,26,27,28,29,30,31,33,34};
 
     // Start is called before the first frame update
@@ -34,7 +37,8 @@ public class TilesController : MonoBehaviour
         levelText.text = "Level " + PlayerPrefs.GetInt("Level").ToString();
 
         disableList = new List<int>();
-
+        unBlockList1 = new List<int>();
+        unBlockList2 = new List<int>();
 
         int c1 = 32 - 5;
         int c2 = 32 - 1;

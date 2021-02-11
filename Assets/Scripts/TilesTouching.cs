@@ -19,6 +19,9 @@ public class TilesTouching : MonoBehaviour
     GameObject doorPos, centerPos, keyPos, KeyAnimObj;
     List<int> disableList, firstDisbleList;
 
+    List<int> unBlockList1;
+    List<int> unBlockList2;
+
     int civilian1, civilian2, key;
     int Monster1, Monster2;
 
@@ -26,18 +29,34 @@ public class TilesTouching : MonoBehaviour
 
     int CoinCount = 0, MedicineCount = 0;
 
+    HealthSystem healthSystem;
+  
+
+
+    public GameObject civilianFirstPopup, civilianSecondPopup;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        isKey = false;
+        healthSystem.coinTextChange();
+
+    }
 
 
 
     private void Awake()
     {
-        
+       
         particleSystem = GetComponent<ParticleSystem>();
         particleSystem.Stop();
-         vc = GetComponent<VisualController>();
+        vc = GetComponent<VisualController>();
         vc.OnPressed += _ => OnClicked();
-
         CoinCount = PlayerPrefs.GetInt("CoinCount");
+        healthSystem = GameObject.Find("HealthManager").GetComponent<HealthSystem>();
+        healthSystem.initHealth();
+        
     }
 
     void OnClicked()
@@ -51,33 +70,40 @@ public class TilesTouching : MonoBehaviour
       
         Sprite civilianSprite = Resources.Load("civilian", typeof(Sprite)) as Sprite;
 
+        Sprite civilianMaskedSprite = Resources.Load("MaskedCivilian", typeof(Sprite)) as Sprite;
+
+        Sprite virus_block = Resources.Load("Virus_Block", typeof(Sprite)) as Sprite;
+
         string name = gameObject.name;
 
         GameObject go = GameObject.Find("TilesController");
-
-
         //particleSystem.Play();
 
         TilesController tilesController = go.GetComponent<TilesController>();
         disableList = tilesController.disableList;
 
         firstDisbleList = tilesController.firstDisbleList;
-        Debug.Log("Name.........." + name);
+        unBlockList1 = tilesController.unBlockList1;
+        unBlockList2 = tilesController.unBlockList2;
+       // Debug.Log("Name.........." + name);
 
          key = PlayerPrefs.GetInt("Key");
          Monster1 = PlayerPrefs.GetInt("Monster1");
          Monster2 = PlayerPrefs.GetInt("Monster2");
+       // Monster2 =19;
 
         int coin = PlayerPrefs.GetInt("Coin");
          civilian1 = PlayerPrefs.GetInt("Civilian1");
          civilian2 = PlayerPrefs.GetInt("Civilian2");
 
+       
 
-        Debug.Log("Key............" + key + ".....monster1........" + Monster1 + "...........monster2..........." + Monster2);
+
+        //Debug.Log("Key............" + key + ".....monster1........" + Monster1 + "...........monster2..........." + Monster2);
 
         if (name.Equals("32") && disableList.Contains(32))
         {
-            Debug.Log("Door Pressed");
+          //  Debug.Log("Door Pressed");
             vc.audioSource.clip = vc.audioClips[2];
             vc.audioSource.Play();
             disableList.Remove(32);
@@ -93,7 +119,7 @@ public class TilesTouching : MonoBehaviour
             }
             PlayerPrefs.SetInt("Level", level);
         }
-        Debug.Log(isKey);
+      //  Debug.Log(isKey);
 
         if (!disableList.Contains(key) && name.Equals(key.ToString()) && !isKey)
         {
@@ -106,7 +132,7 @@ public class TilesTouching : MonoBehaviour
             GameObject.Find(key.ToString()).GetComponent<SpriteRenderer>().sprite = sand;
             GameObject.Find(32.ToString()).GetComponent<VisualController>().isUnlocked = true;
             GameObject.Find(key.ToString()).GetComponent<VisualController>().isUnlocked = false;
-            Debug.Log("Key Success");
+          //  Debug.Log("Key Success");
 
            
 
@@ -150,17 +176,65 @@ public class TilesTouching : MonoBehaviour
             }
             else
             {
-                vc.audioSource.clip = vc.audioClips[7];
-                vc.audioSource.Play();
+                /*vc.audioSource.clip = vc.audioClips[7];
+                vc.audioSource.Play();*/
+
+                if (name.Equals(Monster1.ToString()))
+                {
+                    for (int i = 0; i < unBlockList1.Count; i++)
+                    {
+                        GameObject.Find(unBlockList1[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
+                        if (unBlockList1[i] == key)
+                        {
+
+                            GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = keySprite;
+                        }
+                        else
+                        {
+                           
+                            GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
+                        }
+                        Debug.Log("monster1 Block");
+                    }
+
+                }
+                if(name.Equals(Monster2.ToString())) {
+
+                    for (int i = 0; i < unBlockList2.Count; i++)
+                    {
+
+                        GameObject.Find(unBlockList2[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
+                        if (unBlockList2[i] == key)
+                        {
+
+                            GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = keySprite;
+                        }
+                        else
+                        {
+
+                            GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
+                        }
+                        Debug.Log("monster2 Block");
+
+                    }
+                }
+
+
+                Debug.Log("Monster Pressed"+ unBlockList1.Count);
 
               
                 GameObject.Find(name).GetComponent<SpriteRenderer>().sprite = sand;
-                StartCoroutine(delayPopup(name));
+                //StartCoroutine(delayPopup(name));
+
+                int h = healthSystem.Damage(5);
+                Debug.Log("Health..............." + h.ToString());
+                healthSystem.showVirusFirst();
+               // StartCoroutine(virusPopup());
 
 
             }
             GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
-            Debug.Log("Monster Pressed");
+        //    Debug.Log("Monster Pressed");
            // GameObject.Find(name).GetComponent<VisualController>().isClicked = false;
         }
         else
@@ -170,7 +244,7 @@ public class TilesTouching : MonoBehaviour
             firstDisbleList.Remove(int.Parse(name));
 
 
-            Debug.Log("Monster Pressed Else ");
+        //    Debug.Log("Monster Pressed Else ");
 
             if (!disableList.Contains(int.Parse(name)))
             {
@@ -189,15 +263,19 @@ public class TilesTouching : MonoBehaviour
 
                     PlayerPrefs.SetInt("CoinCount", CoinCount);
 
+                    healthSystem.coinTextChange();
+
                 }
                 else if (name.Equals(civilian1.ToString()) || name.Equals(civilian2.ToString()))
                 {
 
-                    vc.audioSource.clip = vc.audioClips[5];
-                    vc.audioSource.Play();
+                  /*  vc.audioSource.clip = vc.audioClips[5];
+                    vc.audioSource.Play();*/
 
                     GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
-                    StartCoroutine(delayPopup(name));
+                    //  StartCoroutine(delayPopup(name));
+                    healthSystem.showCivilianFirst();
+                   // StartCoroutine(civilianPopup());
 
                  
                 }
@@ -231,7 +309,7 @@ public class TilesTouching : MonoBehaviour
                 if (disableList.Contains(civilian2) && (c1.Equals(civilian2) || (c2.Equals(civilian2) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(civilian2) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(civilian2)))
                 {
 
-                    GameObject.Find(civilian2.ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
+                    GameObject.Find(civilian2.ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
                     GameObject.Find(civilian2.ToString()).GetComponent<VisualController>().isUnlocked = true;
                     disableList.Remove(civilian2);
 
@@ -247,26 +325,7 @@ public class TilesTouching : MonoBehaviour
                     firstDisbleList.Add(key);
 
                 }
-                if (disableList.Contains(Monster1) && (c1.Equals(Monster1) || (c2.Equals(Monster1) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(Monster1) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(Monster1)))
-                {
-
-                    GameObject.Find(Monster1.ToString()).GetComponent<SpriteRenderer>().sprite = stone;
-                    GameObject.Find(Monster1.ToString()).GetComponent<VisualController>().isUnlocked = true;
-                    disableList.Remove(Monster1);
-                   
-
-                }
-
-                if (disableList.Contains(Monster2) && (c1.Equals(Monster2) || (c2.Equals(Monster2) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(Monster2) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(Monster2)))
-                {
-
-                    GameObject.Find(Monster2.ToString()).GetComponent<SpriteRenderer>().sprite = stone;
-                    GameObject.Find(Monster2.ToString()).GetComponent<VisualController>().isUnlocked = true;
-                    disableList.Remove(Monster2);
-                   
-
-                }
-
+          
 
 
                 if (!c1.Equals(32) && c1 <= 34 && c1 >= 0 && disableList.Contains(c1) && !c1.Equals(key) && !c1.Equals(Monster1) && !c1.Equals(Monster2))
@@ -300,22 +359,215 @@ public class TilesTouching : MonoBehaviour
                     disableList.Remove(c4);
                     firstDisbleList.Add(c4);
                 }
+                if (disableList.Contains(Monster1) && (c1.Equals(Monster1) || (c2.Equals(Monster1) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(Monster1) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(Monster1)))
+                {
+
+                    GameObject.Find(Monster1.ToString()).GetComponent<SpriteRenderer>().sprite = stone;
+                    GameObject.Find(Monster1.ToString()).GetComponent<VisualController>().isUnlocked = true;
+
+
+                    List<int> mList = new List<int>();
+                    int m1 = Monster1 - 1;
+                    int m2 = Monster1 + 1;
+                    int m3 = Monster1 - 6;
+                    int m4 = Monster1 - 5;
+                    int m5 = Monster1 - 4;
+                    int m6 = Monster1 + 4;
+                    int m7 = Monster1 + 5;
+                    int m8 = Monster1 + 6;
+
+                    mList.Add(m1);
+                    mList.Add(m2);
+                    mList.Add(m3);
+                    mList.Add(m4);
+                    mList.Add(m5);
+                    mList.Add(m6);
+                    mList.Add(m7);
+                    mList.Add(m8);
+
+                    for (int i = 0; i < mList.Count; i++)
+                    {
+
+                        if (firstDisbleList.Contains(mList[i]))
+                        {
+                            if (!mList[i].Equals(32) && !mList[i].Equals(Monster1) && !mList[i].Equals(coin) && !mList[i].Equals(civilian1) && !mList[i].Equals(civilian2))
+                            {
+
+                                if (Monster1.ToString().Equals("5") || Monster1.ToString().Equals("10") || Monster1.ToString().Equals("15") || Monster1.ToString().Equals("20")
+                                    || Monster1.ToString().Equals("25") || Monster1.ToString().Equals("30"))
+                                {
+
+                                    if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("4") && !mList[i].ToString().Equals("9") && !mList[i].ToString().Equals("14")
+                                    && !mList[i].ToString().Equals("19") && !mList[i].ToString().Equals("24") && !mList[i].ToString().Equals("29"))
+                                    {
+
+
+                                        Debug.Log(mList[i]);
+                                        GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
+                                        GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
+                                        unBlockList1.Add(mList[i]);
+
+                                    }
+
+
+                                }
+                                else if (Monster1.ToString().Equals("4") || Monster1.ToString().Equals("9") || Monster1.ToString().Equals("14")
+                                  || Monster1.ToString().Equals("19") || Monster1.ToString().Equals("24") || Monster1.ToString().Equals("29"))
+                                {
+
+                                    if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("5") && !mList[i].ToString().Equals("10") && !mList[i].ToString().Equals("15") && !mList[i].ToString().Equals("20")
+                                    && !mList[i].ToString().Equals("25") && !mList[i].ToString().Equals("30"))
+                                    {
+
+
+                                        Debug.Log(mList[i]);
+                                        GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
+                                        GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
+                                        unBlockList1.Add(mList[i]);
+
+                                    }
+
+
+                                }
+                                else
+                                {
+
+                                    Debug.Log(mList[i]);
+                                    GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
+                                    GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
+                                    unBlockList1.Add(mList[i]);
+
+                                }
+                            }
+                        }
+
+
+                    }
+                    disableList.Remove(Monster1);
+                }
+
+                if (disableList.Contains(Monster2) && (c1.Equals(Monster2) || (c2.Equals(Monster2) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(Monster2) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(Monster2)))
+                {
+
+                    GameObject.Find(Monster2.ToString()).GetComponent<SpriteRenderer>().sprite = stone;
+                    GameObject.Find(Monster2.ToString()).GetComponent<VisualController>().isUnlocked = true;
+
+                    List<int> mList = new List<int>();
+                  
+                    int m1 = Monster2 - 1;
+                    int m2 = Monster2 + 1;
+                    int m3 = Monster2 - 6;
+                    int m4 = Monster2 - 5;
+                    int m5 = Monster2 - 4;
+                    int m6 = Monster2 + 4;
+                    int m7 = Monster2 + 5;
+                    int m8 = Monster2 + 6;
+
+                    mList.Add(m1);
+                    mList.Add(m2);
+                    mList.Add(m3);
+                    mList.Add(m4);
+                    mList.Add(m5);
+                    mList.Add(m6);
+                    mList.Add(m7);
+                    mList.Add(m8);
+
+                    for (int i = 0; i < mList.Count; i++)
+                    {
+                        if (firstDisbleList.Contains(mList[i]))
+                        {
+                            if (!mList[i].Equals(32) && !mList[i].Equals(Monster1) && !mList[i].Equals(coin) && !mList[i].Equals(civilian1) && !mList[i].Equals(civilian2))
+                            {
+
+                                if (Monster2.ToString().Equals("5") || Monster2.ToString().Equals("10") || Monster2.ToString().Equals("15") || Monster2.ToString().Equals("20")
+                                    || Monster2.ToString().Equals("25") || Monster2.ToString().Equals("30"))
+                                {
+
+                                    if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("4") && !mList[i].ToString().Equals("9") && !mList[i].ToString().Equals("14")
+                                    && !mList[i].ToString().Equals("19") && !mList[i].ToString().Equals("24") && !mList[i].ToString().Equals("29"))
+                                    {
+                                        Debug.Log(mList[i]);
+                                        GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
+                                        GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
+                                        unBlockList2.Add(mList[i]);
+
+
+                                    }
+
+                                }
+                                else if (Monster2.ToString().Equals("4") || Monster2.ToString().Equals("9") || Monster2.ToString().Equals("14")
+                                  || Monster2.ToString().Equals("19") || Monster2.ToString().Equals("24") || Monster2.ToString().Equals("29"))
+                                {
+
+                                    if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("5") && !mList[i].ToString().Equals("10") && !mList[i].ToString().Equals("15") && !mList[i].ToString().Equals("20")
+                                    && !mList[i].ToString().Equals("25") && !mList[i].ToString().Equals("30"))
+                                    {
+
+
+                                        Debug.Log(mList[i]);
+                                        GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
+                                        GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
+                                        unBlockList2.Add(mList[i]);
+
+                                    }
+
+
+                                }
+                                else
+                                {
+
+                                    Debug.Log(mList[i]);
+                                    GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
+                                    GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
+                                    unBlockList2.Add(mList[i]);
+                                }
+                            }
+                        }
+                    }
+                    disableList.Remove(Monster2);
+
+
+                }
+
             }
 
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        isKey = false;
+
+
+    IEnumerator civilianPopup() {
+
+        healthSystem.showCivilianFirst();
+
+        yield return new WaitForSeconds(2f);
+
+       
+         healthSystem.showCivilianSecond();
+
     }
+
+    IEnumerator virusPopup()
+    {
+
+        healthSystem.showVirusFirst();
+
+        yield return new WaitForSeconds(2f);
+
+
+        healthSystem.showVirusSecond();
+
+    }
+
+
+
 
     IEnumerator delayPopup(string name) {
 
         var panel = GameObject.Find("Canvas_Popup");
 
-        Sprite civilianPopup = Resources.Load("Saved Popup", typeof(Sprite)) as Sprite;
+
+       Sprite civilianPopup = Resources.Load("Saved Popup", typeof(Sprite)) as Sprite;
         Sprite virusPopup = Resources.Load("Virus Destroyed", typeof(Sprite)) as Sprite;
 
         GameObject a = (GameObject)Instantiate(popUp);

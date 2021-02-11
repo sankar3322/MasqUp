@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popUp: {fileID: 6832106555624228792, guid: 926fe6530cd0d334b87d0953c42044e9, type: 3}
+  civilianFirstPopup: {fileID: 3638707345798394304, guid: 1b0c738c0cba59a4d9cfeaa3294a19b1, type: 3}
+  civilianSecondPopup: {fileID: 4558713807396852434, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
 --- !u!114 &1692436183792292737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +151,7 @@ MonoBehaviour:
   isPulsing: 0
   appearSFX: []
   pressSFX: []
+  coinText: {fileID: 0}
   isUnlocked: 0
   isClicked: 0
   audioClips:

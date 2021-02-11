@@ -100,8 +100,6 @@ public class VisualController : MonoBehaviour
             .Append(transform.DOPunchScale(Vector3.one * punchScale * 3, 1f, vibrato: 1, elasticity: 5f))
             .AppendInterval(0.1f).SetLoops(-1);
 
-
-
        
     }
 }
