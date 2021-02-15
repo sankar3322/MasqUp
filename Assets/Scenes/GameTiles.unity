@@ -451,15 +451,22 @@ MonoBehaviour:
   civilianStatusOneText: {fileID: 2141171452}
   civilianStatusSecondText: {fileID: 1911879664}
   civilianTopText: {fileID: 1755295800}
+  virusInfectionText: {fileID: 773353619}
+  medicineText: {fileID: 1211427720}
   civilianFirstPopup: {fileID: 340008456}
   civiliainSecondPopup: {fileID: 733732076}
-  virusFirstPopup: {fileID: 1285891448}
+  virusFirstPopup: {fileID: 773353617}
   virusSecondPopup: {fileID: 1273356935}
   deadPopup: {fileID: 1452660705}
   civilianFirstImage: {fileID: 2027307406}
   civilianSecondImage: {fileID: 393749813}
   continueBtn: {fileID: 2109768774}
   carryOnBtn: {fileID: 47584174}
+  chanceInfection: 0
+  civilianInfectedStatus: 0
+  virusChanceHit: 0
+  maskValue: 0
+  hitValue: 0
 --- !u!4 &39227526
 Transform:
   m_ObjectHideFlags: 0
@@ -472,7 +479,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &47584174
 GameObject:
@@ -1649,7 +1656,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &260043662
 GameObject:
@@ -3720,6 +3727,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643833322}
   m_CullTransparentMesh: 0
+--- !u!1 &650243510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 650243511}
+  - component: {fileID: 650243513}
+  - component: {fileID: 650243512}
+  m_Layer: 5
+  m_Name: Virus Popup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &650243511
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650243510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.8, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1971109125}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 180.40002}
+  m_SizeDelta: {x: 0, y: -451.12158}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &650243512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650243510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: fe326b0d917aaaa4e8b212727bbb23ac, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &650243513
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650243510}
+  m_CullTransparentMesh: 0
 --- !u!1 &658724441
 GameObject:
   m_ObjectHideFlags: 0
@@ -4291,7 +4373,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ATTACK - 10
+  m_Text: ATTACK - 5
 --- !u!222 &729023297
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4807,7 +4889,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 763425650}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 39227525}
+        m_TargetAssemblyTypeName: HealthSystem, Assembly-CSharp
+        m_MethodName: takeMedsValidation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &769721223
 GameObject:
   m_ObjectHideFlags: 0
@@ -4882,6 +4976,85 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769721223}
+  m_CullTransparentMesh: 0
+--- !u!1 &773353617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 773353618}
+  - component: {fileID: 773353620}
+  - component: {fileID: 773353619}
+  m_Layer: 5
+  m_Name: Virus Infection Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &773353618
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773353617}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0625, y: 1.2309353, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1971109125}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 11, y: 173.2}
+  m_SizeDelta: {x: 610.7047, y: 53.710266}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &773353619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773353617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: d20767817bb894c828d5d4ffa85ef741, type: 3}
+    m_FontSize: 150
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 1
+    m_MaxSize: 150
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Infected (+5)
+--- !u!222 &773353620
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773353617}
   m_CullTransparentMesh: 0
 --- !u!1 &781364133
 GameObject:
@@ -7183,7 +7356,7 @@ GameObject:
   - component: {fileID: 1211427721}
   - component: {fileID: 1211427720}
   m_Layer: 5
-  m_Name: count
+  m_Name: Capsulecount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10346,7 +10519,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1676777756}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 39227525}
+        m_TargetAssemblyTypeName: HealthSystem, Assembly-CSharp
+        m_MethodName: giveMedsValidation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1688024416
 GameObject:
   m_ObjectHideFlags: 0
@@ -11274,6 +11459,8 @@ RectTransform:
   - {fileID: 1285891449}
   - {fileID: 1273356936}
   - {fileID: 1452660706}
+  - {fileID: 773353618}
+  - {fileID: 650243511}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11447,7 +11634,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DEFENCE- 10
+  m_Text: DEFENCE- 5
 --- !u!222 &1979521164
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12136,7 +12323,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2199956744582747649, guid: 46feffb18404045b88e38e6201501863, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2199956744582747649, guid: 46feffb18404045b88e38e6201501863, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12191,26 +12378,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 17730033, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
-      propertyPath: ShapeModule.type
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 17730033, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
-      propertyPath: ShapeModule.angle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 17730033, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
-      propertyPath: ShapeModule.arc.value
-      value: 360
-      objectReference: {fileID: 0}
-    - target: {fileID: 17730033, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
-      propertyPath: ShapeModule.radiusThickness
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 17730033, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
-      propertyPath: InitialModule.gravityModifier.scalar
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1023538968527713779, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
       propertyPath: m_Name
       value: 1
@@ -12253,7 +12420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6999530124164696919, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6999530124164696919, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12594,6 +12761,26 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4558713807432973642, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558713807432973642, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HealthSystem, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558713807432973642, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: takeMedsValidation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558713807432973642, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558713807432973646, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4558713807432973647, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -372.99994
@@ -12709,6 +12896,22 @@ PrefabInstance:
     - target: {fileID: 4558713808455646729, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
       propertyPath: m_SizeDelta.x
       value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558713808608335648, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558713808608335648, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HealthSystem, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558713808608335648, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: giveMedsValidation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558713808608335648, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4558713808608335653, guid: ba5b25a1831df4d479975a8a1e637b1e, type: 3}
       propertyPath: m_AnchoredPosition.y
