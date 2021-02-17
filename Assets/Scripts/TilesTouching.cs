@@ -11,7 +11,7 @@ public class TilesTouching : MonoBehaviour
 
 
     bool isKey;
-    int level=0;
+  
    
     VisualController vc;
     public GameObject popUp;
@@ -77,8 +77,7 @@ public class TilesTouching : MonoBehaviour
         string name = gameObject.name;
 
         GameObject go = GameObject.Find("TilesController");
-        
-
+      
         TilesController tilesController = go.GetComponent<TilesController>();
         disableList = tilesController.disableList;
 
@@ -102,17 +101,8 @@ public class TilesTouching : MonoBehaviour
             vc.audioSource.clip = vc.audioClips[2];
             vc.audioSource.Play();
             disableList.Remove(32);
-            SceneManager.LoadScene(1);
-            
-            if (PlayerPrefs.GetInt("Level").Equals(0))
-            {
-                level = 1;
-            }
-            else
-            {
-                level = PlayerPrefs.GetInt("Level") + 1;
-            }
-            PlayerPrefs.SetInt("Level", level);
+            healthSystem.nextLevel();
+       
         }
       
 
@@ -157,6 +147,7 @@ public class TilesTouching : MonoBehaviour
                 vc.audioSource.clip = vc.audioClips[2];
                 vc.audioSource.Play();
                 GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
+               
             }
             else
             {
@@ -185,6 +176,7 @@ public class TilesTouching : MonoBehaviour
 
                     if (name.Equals(Monster1.ToString()))
                     {
+                        
                         for (int i = 0; i < unBlockList1.Count; i++)
                         {
                             GameObject.Find(unBlockList1[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
@@ -193,18 +185,37 @@ public class TilesTouching : MonoBehaviour
 
                                 GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = keySprite;
                             }
+                            else if (unBlockList1[i] == civilian1)
+                            {
+
+                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
+                            }
+                            else if (unBlockList1[i] == civilian2)
+                            {
+
+                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
+                            }
+                            else if (unBlockList1[i] == coin)
+                            {
+
+                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = coinSprite;
+                            } else if (unBlockList1[i] == Monster2) {
+
+                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = stone;
+                            }
                             else
                             {
 
                                 GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
                             }
-                            Debug.Log("monster1 Block");
+                            Debug.Log("monster1 Block" +unBlockList1[i]);
                         }
+                        unBlockList1.Clear();
 
                     }
                     if (name.Equals(Monster2.ToString()))
                     {
-
+                       
                         for (int i = 0; i < unBlockList2.Count; i++)
                         {
 
@@ -214,14 +225,34 @@ public class TilesTouching : MonoBehaviour
 
                                 GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = keySprite;
                             }
+                            else if (unBlockList2[i] == civilian1) {
+
+                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
+                            }
+                            else if (unBlockList2[i] == civilian2)
+                            {
+
+                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
+                            }
+                            else if (unBlockList2[i] == coin)
+                            {
+
+                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = coinSprite;
+                            }
+                            else if (unBlockList2[i] == Monster1)
+                            {
+
+                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = stone;
+                            }
                             else
                             {
 
                                 GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
                             }
-                            Debug.Log("monster2 Block");
+                            Debug.Log("monster2 Block"+ unBlockList2[i]);
 
                         }
+                        unBlockList2.Clear();
                     }
 
 
@@ -295,7 +326,7 @@ public class TilesTouching : MonoBehaviour
                 GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
                 GameObject.Find(name).GetComponent<SpriteRenderer>().sprite = sand;
 
-                if (disableList.Contains(coin) && (c1.Equals(coin) || (c2.Equals(coin) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(coin) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(coin)))
+                if (!unBlockList1.Contains(coin) && !unBlockList2.Contains(coin) && disableList.Contains(coin) && (c1.Equals(coin) || (c2.Equals(coin) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(coin) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(coin)))
                 {
 
                     GameObject.Find(coin.ToString()).GetComponent<SpriteRenderer>().sprite = coinSprite;
@@ -334,7 +365,7 @@ public class TilesTouching : MonoBehaviour
                 }
           
 
-                if (!c1.Equals(32) && c1 <= 34 && c1 >= 0 && disableList.Contains(c1) && !c1.Equals(key) && !c1.Equals(Monster1) && !c1.Equals(Monster2))
+                if (!c1.Equals(32) && c1 <= 34 && c1 >= 0 && disableList.Contains(c1) && !c1.Equals(key) && !c1.Equals(Monster1) && !c1.Equals(Monster2) && !unBlockList1.Contains(c1) && !unBlockList2.Contains(c1))
                 {
                     GameObject.Find(c1.ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
                     GameObject.Find(c1.ToString()).GetComponent<VisualController>().isUnlocked = true;
@@ -342,7 +373,7 @@ public class TilesTouching : MonoBehaviour
                     firstDisbleList.Add(c1);
                 }
 
-                if (!c2.Equals(32) && c2 <= 34 && c2 >= 0 && disableList.Contains(c2) && !c2.Equals(key) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30") && !c2.Equals(Monster1) && !c2.Equals(Monster2))
+                if (!c2.Equals(32) && c2 <= 34 && c2 >= 0 && disableList.Contains(c2) && !c2.Equals(key) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30") && !c2.Equals(Monster1) && !c2.Equals(Monster2) && !unBlockList1.Contains(c2) && !unBlockList2.Contains(c2))
                 {
                     GameObject.Find(c2.ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
                     GameObject.Find(c2.ToString()).GetComponent<VisualController>().isUnlocked = true;
@@ -350,7 +381,7 @@ public class TilesTouching : MonoBehaviour
                     firstDisbleList.Add(c2);
                 }
 
-                if (!c3.Equals(32) && c3 <= 34 && c3 >= 0 && disableList.Contains(c3) && !c3.Equals(key) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29") && !c3.Equals(Monster1) && !c3.Equals(Monster2))
+                if (!c3.Equals(32) && c3 <= 34 && c3 >= 0 && disableList.Contains(c3) && !c3.Equals(key) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29") && !c3.Equals(Monster1) && !c3.Equals(Monster2) && !unBlockList1.Contains(c3) && !unBlockList2.Contains(c3))
                 {
                     GameObject.Find(c3.ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
                     GameObject.Find(c3.ToString()).GetComponent<VisualController>().isUnlocked = true;
@@ -358,7 +389,7 @@ public class TilesTouching : MonoBehaviour
                     firstDisbleList.Add(c3);
                 }
 
-                if (!c4.Equals(32) && c4 <= 34 && c4 >= 0 && disableList.Contains(c4) && !c4.Equals(key) && !c4.Equals(Monster1) && !c4.Equals(Monster2))
+                if (!c4.Equals(32) && c4 <= 34 && c4 >= 0 && disableList.Contains(c4) && !c4.Equals(key) && !c4.Equals(Monster1) && !c4.Equals(Monster2) && !unBlockList1.Contains(c4) && !unBlockList2.Contains(c4))
                 {
                     GameObject.Find(c4.ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
                     GameObject.Find(c4.ToString()).GetComponent<VisualController>().isUnlocked = true;
@@ -408,17 +439,17 @@ public class TilesTouching : MonoBehaviour
                     for (int i = 0; i < mList.Count; i++)
                     {
 
-                        if (firstDisbleList.Contains(mList[i]))
+                        if (firstDisbleList.Contains(mList[i]) || disableList.Contains(mList[i]))
                         {
-                            if (!mList[i].Equals(32) && !mList[i].Equals(Monster1) && !mList[i].Equals(coin) && !mList[i].Equals(civilian1) && !mList[i].Equals(civilian2))
+                            if (!mList[i].Equals(32))
                             {
 
-                                if (Monster1.ToString().Equals("5") || Monster1.ToString().Equals("10") || Monster1.ToString().Equals("15") || Monster1.ToString().Equals("20")
+                                if (Monster1.ToString().Equals("0") || Monster1.ToString().Equals("5") || Monster1.ToString().Equals("10") || Monster1.ToString().Equals("15") || Monster1.ToString().Equals("20")
                                     || Monster1.ToString().Equals("25") || Monster1.ToString().Equals("30"))
                                 {
 
                                     if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("4") && !mList[i].ToString().Equals("9") && !mList[i].ToString().Equals("14")
-                                    && !mList[i].ToString().Equals("19") && !mList[i].ToString().Equals("24") && !mList[i].ToString().Equals("29"))
+                                    && !mList[i].ToString().Equals("19") && !mList[i].ToString().Equals("24") && !mList[i].ToString().Equals("29") && !mList[i].ToString().Equals("34"))
                                     {
 
 
@@ -426,14 +457,25 @@ public class TilesTouching : MonoBehaviour
                                         GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
                                         GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
                                         unBlockList1.Add(mList[i]);
+                                        if (disableList.Contains(mList[i]))
+                                        {
+                                            disableList.Remove(mList[i]);
+                                        }
+                                        if (!firstDisbleList.Contains(mList[i]))
+                                        {
+
+                                            firstDisbleList.Add(mList[i]);
+
+                                        }
 
                                     }
+                                  
                                 }
                                 else if (Monster1.ToString().Equals("4") || Monster1.ToString().Equals("9") || Monster1.ToString().Equals("14")
-                                  || Monster1.ToString().Equals("19") || Monster1.ToString().Equals("24") || Monster1.ToString().Equals("29"))
+                                  || Monster1.ToString().Equals("19") || Monster1.ToString().Equals("24") || Monster1.ToString().Equals("29") || Monster1.ToString().Equals("34"))
                                 {
 
-                                    if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("5") && !mList[i].ToString().Equals("10") && !mList[i].ToString().Equals("15") && !mList[i].ToString().Equals("20")
+                                    if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("0") && !mList[i].ToString().Equals("5") && !mList[i].ToString().Equals("10") && !mList[i].ToString().Equals("15") && !mList[i].ToString().Equals("20")
                                     && !mList[i].ToString().Equals("25") && !mList[i].ToString().Equals("30"))
                                     {
 
@@ -443,7 +485,18 @@ public class TilesTouching : MonoBehaviour
                                         GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
                                         unBlockList1.Add(mList[i]);
 
+                                        if (disableList.Contains(mList[i]))
+                                        {
+                                            disableList.Remove(mList[i]);
+                                        }
+                                        if (!firstDisbleList.Contains(mList[i]))
+                                        {
+
+                                            firstDisbleList.Add(mList[i]);
+
+                                        }
                                     }
+                                  
                                 }
                                 else
                                 {
@@ -452,13 +505,25 @@ public class TilesTouching : MonoBehaviour
                                     GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
                                     GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
                                     unBlockList1.Add(mList[i]);
+                                    if (disableList.Contains(mList[i]))
+                                    {
+                                        disableList.Remove(mList[i]);
+                                    }
+                                    if (!firstDisbleList.Contains(mList[i]))
+                                    {
+
+                                        firstDisbleList.Add(mList[i]);
+
+                                    }
 
                                 }
                             }
+                           
                         }
 
 
                     }
+                    Debug.Log("BlockList1.........." + unBlockList1.Count);
                     disableList.Remove(Monster1);
                 }
 
@@ -501,32 +566,42 @@ public class TilesTouching : MonoBehaviour
 
                     for (int i = 0; i < mList.Count; i++)
                     {
-                        if (firstDisbleList.Contains(mList[i]))
+                        if (firstDisbleList.Contains(mList[i]) || disableList.Contains(mList[i]))
                         {
-                            if (!mList[i].Equals(32) && !mList[i].Equals(Monster1) && !mList[i].Equals(coin) && !mList[i].Equals(civilian1) && !mList[i].Equals(civilian2))
+                            if (!mList[i].Equals(32))
                             {
 
-                                if (Monster2.ToString().Equals("5") || Monster2.ToString().Equals("10") || Monster2.ToString().Equals("15") || Monster2.ToString().Equals("20")
+                                if (Monster2.ToString().Equals("0") || Monster2.ToString().Equals("5") || Monster2.ToString().Equals("10") || Monster2.ToString().Equals("15") || Monster2.ToString().Equals("20")
                                     || Monster2.ToString().Equals("25") || Monster2.ToString().Equals("30"))
                                 {
 
                                     if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("4") && !mList[i].ToString().Equals("9") && !mList[i].ToString().Equals("14")
-                                    && !mList[i].ToString().Equals("19") && !mList[i].ToString().Equals("24") && !mList[i].ToString().Equals("29"))
+                                    && !mList[i].ToString().Equals("19") && !mList[i].ToString().Equals("24") && !mList[i].ToString().Equals("29") && !mList[i].ToString().Equals("34"))
                                     {
                                         Debug.Log(mList[i]);
                                         GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
                                         GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
                                         unBlockList2.Add(mList[i]);
+                                        if (disableList.Contains(mList[i]))
+                                        {
+                                            disableList.Remove(mList[i]);
+                                        }
+                                        if (!firstDisbleList.Contains(mList[i]))
+                                        {
+
+                                            firstDisbleList.Add(mList[i]);
+
+                                        }
 
 
                                     }
 
                                 }
                                 else if (Monster2.ToString().Equals("4") || Monster2.ToString().Equals("9") || Monster2.ToString().Equals("14")
-                                  || Monster2.ToString().Equals("19") || Monster2.ToString().Equals("24") || Monster2.ToString().Equals("29"))
+                                  || Monster2.ToString().Equals("19") || Monster2.ToString().Equals("24") || Monster2.ToString().Equals("29") || Monster2.ToString().Equals("34"))
                                 {
 
-                                    if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("5") && !mList[i].ToString().Equals("10") && !mList[i].ToString().Equals("15") && !mList[i].ToString().Equals("20")
+                                    if (mList[i] <= 34 && mList[i] >= 0 && !mList[i].ToString().Equals("0") && !mList[i].ToString().Equals("5") && !mList[i].ToString().Equals("10") && !mList[i].ToString().Equals("15") && !mList[i].ToString().Equals("20")
                                     && !mList[i].ToString().Equals("25") && !mList[i].ToString().Equals("30"))
                                     {
 
@@ -535,8 +610,18 @@ public class TilesTouching : MonoBehaviour
                                         GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
                                         GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
                                         unBlockList2.Add(mList[i]);
+                                        if (disableList.Contains(mList[i]))
+                                        {
+                                            disableList.Remove(mList[i]);
+                                        }
+                                        if (!firstDisbleList.Contains(mList[i]))
+                                        {
 
+                                            firstDisbleList.Add(mList[i]);
+
+                                        }
                                     }
+                                
 
 
                                 }
@@ -547,12 +632,23 @@ public class TilesTouching : MonoBehaviour
                                     GameObject.Find(mList[i].ToString()).GetComponent<SpriteRenderer>().sprite = virus_block;
                                     GameObject.Find(mList[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
                                     unBlockList2.Add(mList[i]);
+                                     if (disableList.Contains(mList[i]))
+                        {
+                            disableList.Remove(mList[i]);
+                        }
+                        if (!firstDisbleList.Contains(mList[i]))
+                        {
+
+                            firstDisbleList.Add(mList[i]);
+
+                        }
                                 }
                             }
                         }
+                       
                     }
                     disableList.Remove(Monster2);
-
+                    Debug.Log("BlockList2.........."+unBlockList2.Count);
 
                 }
 
