@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class TilesTouching : MonoBehaviour
 {
 
-
     bool isKey;
   
    
@@ -19,8 +18,8 @@ public class TilesTouching : MonoBehaviour
     GameObject doorPos, centerPos, keyPos, KeyAnimObj;
     List<int> disableList, firstDisbleList;
 
-    List<int> unBlockList1;
-    List<int> unBlockList2;
+    public List<int> unBlockList1;
+    public List<int> unBlockList2;
 
     int civilian1, civilian2, key;
     int Monster1, Monster2;
@@ -65,15 +64,10 @@ public class TilesTouching : MonoBehaviour
         Sprite sand = Resources.Load("opened", typeof(Sprite)) as Sprite;
         Sprite keySprite = Resources.Load("key", typeof(Sprite)) as Sprite;
         Sprite stone = Resources.Load("virus", typeof(Sprite)) as Sprite;
-
         Sprite coinSprite = Resources.Load("coin", typeof(Sprite)) as Sprite;
-      
         Sprite civilianSprite = Resources.Load("civilian", typeof(Sprite)) as Sprite;
-
         Sprite civilianMaskedSprite = Resources.Load("MaskedCivilian", typeof(Sprite)) as Sprite;
-
         Sprite virus_block = Resources.Load("Virus_Block", typeof(Sprite)) as Sprite;
-
         string name = gameObject.name;
 
         GameObject go = GameObject.Find("TilesController");

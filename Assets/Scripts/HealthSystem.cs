@@ -19,7 +19,7 @@ public class HealthSystem : MonoBehaviour
 
     public GameObject civilianFirstPopup, civiliainSecondPopup, virusFirstPopup, virusSecondPopup, deadPopup, civilianFirstImage, civilianSecondImage, continueBtn, carryOnBtn, virusInfectionText, ignoreBtn;
 
-    List<int>  firstDisbleList;
+    List<int>  firstDisbleList, unblockList1, unblockList2;
     string civilianType;
     Sprite civilianMaskedSprite, civilianNoMaskSprite;
     public int youChanceInfection, civilianChanceInfection, civilianInfectedStatus, virusChanceHit, maskValue, hitValue;
@@ -29,6 +29,7 @@ public class HealthSystem : MonoBehaviour
 
     public GameObject nextLevelPopup, nextLevelbtn;
     int level = 0;
+    TilesController tilesController;
 
 
 
@@ -57,9 +58,15 @@ public class HealthSystem : MonoBehaviour
         }
         infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection");
         GameObject go = GameObject.Find("TilesController");
-        TilesController tilesController = go.GetComponent<TilesController>();
+        tilesController = go.GetComponent<TilesController>();
         firstDisbleList = tilesController.firstDisbleList;
         firstDisbleList.Add(32);
+        
+
+
+
+
+
         civilianMaskedSprite = Resources.Load("Masked", typeof(Sprite)) as Sprite;
         civilianNoMaskSprite = Resources.Load("NoMasked", typeof(Sprite)) as Sprite;
         DOTween.Sequence()
@@ -219,6 +226,8 @@ public class HealthSystem : MonoBehaviour
 
             }
         }
+        firstDisbleList.Add(PlayerPrefs.GetInt("Monster1"));
+        firstDisbleList.Add(PlayerPrefs.GetInt("Monster2"));
         civilianChanceOfInfectionText.text = "CHANCE OF INFECTION " + civilianChanceInfection.ToString() + "%";
         Debug.Log(civilianChanceInfection);
         for (int i = 0; i <= 34; i++)
@@ -342,6 +351,27 @@ public class HealthSystem : MonoBehaviour
                 }
             }
         }
+        unblockList1 = tilesController.unBlockList1;
+        unblockList2 = tilesController.unBlockList2;
+
+        if (unblockList1.Count != 0) { 
+        for (int i = 0; i < unblockList1.Count; i++) {
+
+            GameObject.Find(unblockList1[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
+                Debug.Log(unblockList1.Count);
+            }
+    }
+        if (unblockList2.Count != 0)
+        {
+            for (int i = 0; i < unblockList2.Count; i++)
+            {
+
+                GameObject.Find(unblockList2[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
+                
+                Debug.Log(unblockList2.Count);
+            }
+        }
+       
         civilianFirstPopup.SetActive(false);
         civiliainSecondPopup.SetActive(false);
 
