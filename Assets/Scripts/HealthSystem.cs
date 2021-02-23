@@ -173,7 +173,7 @@ public class HealthSystem : MonoBehaviour
 
         }
         else {
-
+            isInfected = true;
             civilianStatusOneText.text = "INFECTED";
         }
         Debug.Log("civilianInfectedStatus" + civilianInfectedStatus);
@@ -258,13 +258,13 @@ public class HealthSystem : MonoBehaviour
             if (PlayerPrefs.GetInt("Infection") >= 5)
             {
                 civilianStatusSecondText.text = "INFECTED";
-                civilianTopText.text = "CIVILIAN WERE INFECTED";
+                civilianTopText.text = "CIVILIAN WAS INFECTED";
                 isInfected = true;
             }
             else
             {
                 civilianStatusSecondText.text = "HEALTHY";
-                civilianTopText.text = "CIVILIAN WERE NOT INFECTED";
+                civilianTopText.text = "CIVILIAN WAS NOT INFECTED";
 
             }
         }
@@ -272,7 +272,7 @@ public class HealthSystem : MonoBehaviour
         {
 
             civilianStatusSecondText.text = "INFECTED";
-            civilianTopText.text = "CIVILIAN WERE INFECTED";
+            civilianTopText.text = "CIVILIAN WAS INFECTED";
             isInfected = true;
         }
         int infectedOrNot = Random.Range(0, 100);
@@ -321,7 +321,7 @@ public class HealthSystem : MonoBehaviour
         if (isInfected) {
             PlayerPrefs.SetInt("MEDICINE", PlayerPrefs.GetInt("MEDICINE") - 1);
             civilianStatusSecondText.text = "HEALTHY";
-            civilianTopText.text = "CIVILIAN WERE NOT INFECTED";
+            civilianTopText.text = "CIVILIAN WAS NOT INFECTED";
             Debug.Log("GiveMeds");
             medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
             isInfected = false;
