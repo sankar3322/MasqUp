@@ -17,6 +17,8 @@ public class TilesController : MonoBehaviour
     public List<int> disableList;
     public List<int> firstDisbleList;
 
+     public string name;
+    public bool isPopup = false;
     public List<int> unBlockList1;
     public List<int> unBlockList2;
     List<int> randomNumber = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,22, 23, 24,25,26,27,28,29,30,31,33,34};
@@ -93,6 +95,11 @@ public class TilesController : MonoBehaviour
             randomNumber.Remove(civilian1);
         }
         int civilian2 = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
+        if (randomNumber.Contains(civilian2))
+        {
+            randomNumber.Remove(civilian2);
+        }
+        int medicine = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
 
 
         PlayerPrefs.SetInt("Key", key);
@@ -101,9 +108,10 @@ public class TilesController : MonoBehaviour
         PlayerPrefs.SetInt("Coin", coin);
         PlayerPrefs.SetInt("Civilian1", civilian1);
         PlayerPrefs.SetInt("Civilian2", civilian2);
+        PlayerPrefs.SetInt("SpawnMedicine", medicine);
 
         Debug.Log("Key............" + key + ".....monster1........" + monster1 + "...........monster2..........." + monster2+".........Coin.........."+coin+"........Civilian 1 and 2...."+civilian1+","+civilian2);
-
+        Debug.Log("medicine............."+medicine);
 
 
         Debug.Log(randomNumber.Count);
@@ -116,6 +124,8 @@ public class TilesController : MonoBehaviour
         Sprite doorSprite = Resources.Load("door", typeof(Sprite)) as Sprite;
         Sprite keySprite = Resources.Load("key", typeof(Sprite)) as Sprite;
         Sprite stone = Resources.Load("block", typeof(Sprite)) as Sprite;
+
+        
 
 
         for (int row =0; row<rows;row++)
@@ -138,6 +148,7 @@ public class TilesController : MonoBehaviour
                     tile.GetComponent<SpriteRenderer>().sprite = doorSprite;
                     disableList.Remove(32);
                 }
+                tile.GetComponent<Animator>().enabled = false;
 
                 if ((tile.name.Equals(c1.ToString()) && c1 <= 34 && c1 >= 0) || (tile.name.Equals(c2.ToString()) && c2 <= 34 && c2 >= 0) || (tile.name.Equals(c3.ToString()) && c3 <= 34 && c3 >= 0) || (tile.name.Equals(c4.ToString()) && c4 <= 34 && c4 >= 0))
                 {

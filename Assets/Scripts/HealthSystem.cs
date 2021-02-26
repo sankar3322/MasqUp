@@ -13,7 +13,7 @@ public class HealthSystem : MonoBehaviour
     private int healthMax;
     private int attackValue=0;
     private int defenceValue=0;
-    private string infectionInit = "INFECTION - ", attackInit = "ATTACK - ", defenceInit = "DEFENCE - ";
+    private string infectionInit = "INFECTION LEVEL ", attackInit = "ATTACK - ", defenceInit = "DEFENCE - ";
     public Text coinText, infectionText, attackText, defenceText, civilianSecondStatus, civilianFirstStatus, civilianFirstMaskProText, civilianSecondMaskProText, 
         youChanceOfInfectionText, civilianChanceOfInfectionText, infectedOrNotText, civilianStatusOneText, civilianStatusSecondText, civilianTopText, medicineText;
 
@@ -22,7 +22,7 @@ public class HealthSystem : MonoBehaviour
     List<int>  firstDisbleList, unblockList1, unblockList2;
     string civilianType;
     Sprite civilianMaskedSprite, civilianNoMaskSprite;
-    public int youChanceInfection, civilianChanceInfection, civilianInfectedStatus, virusChanceHit, maskValue, hitValue;
+    public int youChanceInfection, civilianChanceInfection, civilianInfectedStatus, virusChanceHit, hitValue;
     bool isInfected;
 
     public Text infectionNLText, coinNLText, medsNLText, attackNLText, defenceNLText, civilianCountNLText;
@@ -35,6 +35,8 @@ public class HealthSystem : MonoBehaviour
 
     private void Start()
     {
+
+     
         PlayerPrefs.SetInt("ATTACK",5);
         PlayerPrefs.SetInt("DEFENCE", 5);
         if (PlayerPrefs.GetInt("CIVILIAN_COUNT") == null)
@@ -45,24 +47,25 @@ public class HealthSystem : MonoBehaviour
        
         if(PlayerPrefs.GetInt("MEDICINE")==0 || PlayerPrefs.GetInt("MEDICINE") == null)
         {
-            PlayerPrefs.SetInt("MEDICINE", 100);
+            PlayerPrefs.SetInt("MEDICINE", 2);
         }
         
         medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
         isInfected = false;
-        maskValue = 5;
-        PlayerPrefs.SetInt("PLAYER_DEFENCE",5);
+       
+      
         if (PlayerPrefs.GetInt("Infection") >= 100)
         {
             PlayerPrefs.SetInt("Infection", 0);
         }
-        infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection");
+        infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
         GameObject go = GameObject.Find("TilesController");
         tilesController = go.GetComponent<TilesController>();
         firstDisbleList = tilesController.firstDisbleList;
         firstDisbleList.Add(32);
-        
 
+        attackText.text = PlayerPrefs.GetInt("ATTACK").ToString();
+        defenceText.text = PlayerPrefs.GetInt("DEFENCE").ToString()+"%";
 
 
 
@@ -80,19 +83,28 @@ public class HealthSystem : MonoBehaviour
         coinText.text = PlayerPrefs.GetInt("CoinCount").ToString();
     }
 
+    public void medsTextChange()
+    {
+        PlayerPrefs.SetInt("MEDICINE", PlayerPrefs.GetInt("MEDICINE") + 1);
+
+        medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
+    }
+
     public void nextLevel() {
 
-      
-        nextLevelPopup.SetActive(true);
-        for (int i = 0; i <= 34; i++)
-        {
-            if (firstDisbleList.Contains(i))
-            {
-                    GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = false; 
-            }
-        }
+
+           nextLevelPopup.SetActive(true);
+        /*   for (int i = 0; i <= 34; i++)
+          {
+              if (firstDisbleList.Contains(i))
+              {
+                      GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = false; 
+              }
+          }*/
+
+        tilesController.isPopup = true;
        
-        infectionNLText.text = PlayerPrefs.GetInt("Infection").ToString();
+        infectionNLText.text = PlayerPrefs.GetInt("Infection")+"%";
 
         coinNLText.text = PlayerPrefs.GetInt("CoinCount").ToString();
         medsNLText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
@@ -143,7 +155,7 @@ public class HealthSystem : MonoBehaviour
             }
 
         }
-        infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection");
+        infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection") +"%";
         nextLevel();
     }
 
@@ -154,6 +166,8 @@ public class HealthSystem : MonoBehaviour
     public void showCivilianFirst(string CivilianName) {
 
 
+
+        tilesController.isPopup = true;
       /*  DOTween.Sequence()
            .Append(continueBtn.transform.DOPunchScale(Vector3.one * 0.03f * 3, 1f, vibrato: 2, elasticity: 3f))
            .AppendInterval(0.1f).SetLoops(-1);
@@ -165,7 +179,7 @@ public class HealthSystem : MonoBehaviour
         civilianType = CivilianName;
         civilianPopupStatus(civilianFirstStatus);
 
-        civilianInfectedStatus = Random.Range(0, 2);
+        civilianInfectedStatus = 1;
 
         if (civilianInfectedStatus == 0)
         {
@@ -188,13 +202,13 @@ public class HealthSystem : MonoBehaviour
             {
                 civilianFirstImage.GetComponent<Image>().sprite = civilianNoMaskSprite;
                 civilianFirstMaskProText.text = "NO MASK";
-                youChanceInfection = 100 - (PlayerPrefs.GetInt("PLAYER_DEFENCE") + 0);
+                youChanceInfection = 100 - (PlayerPrefs.GetInt("DEFENCE") + 0);
 
             }
             else {
                 civilianFirstImage.GetComponent<Image>().sprite = civilianMaskedSprite;
                 civilianFirstMaskProText.text = "MASKED";
-                youChanceInfection = 100 - (PlayerPrefs.GetInt("PLAYER_DEFENCE") + 30);
+                youChanceInfection = 100 - (PlayerPrefs.GetInt("DEFENCE") + 30);
 
             }
         }
@@ -215,14 +229,14 @@ public class HealthSystem : MonoBehaviour
             {
                 civilianFirstImage.GetComponent<Image>().sprite = civilianNoMaskSprite;
                 civilianFirstMaskProText.text = "NO MASK";
-                civilianChanceInfection = 100 - (PlayerPrefs.GetInt("PLAYER_DEFENCE") + 0);
+                civilianChanceInfection = 100 - (PlayerPrefs.GetInt("DEFENCE") + 0);
 
             }
             else
             {
                 civilianFirstImage.GetComponent<Image>().sprite = civilianMaskedSprite;
                 civilianFirstMaskProText.text = "MASKED";
-                civilianChanceInfection = 100 - (PlayerPrefs.GetInt("PLAYER_DEFENCE") + 30);
+                civilianChanceInfection = 100 - (PlayerPrefs.GetInt("DEFENCE") + 30);
 
             }
         }
@@ -230,17 +244,17 @@ public class HealthSystem : MonoBehaviour
         firstDisbleList.Add(PlayerPrefs.GetInt("Monster2"));
         civilianChanceOfInfectionText.text = "CHANCE OF INFECTION " + civilianChanceInfection.ToString() + "%";
         Debug.Log(civilianChanceInfection);
-        for (int i = 0; i <= 34; i++)
+      /*  for (int i = 0; i <= 34; i++)
         {
             if (firstDisbleList.Contains(i))
             {
-                if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") /*&& i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2")*/)
+                if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") *//*&& i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2")*//*)
                 {
                     GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = false;
 
                 }
             }
-        }
+        }*/
         civilianFirstPopup.SetActive(true);
       
     }
@@ -295,7 +309,7 @@ public class HealthSystem : MonoBehaviour
             else
             {
                 PlayerPrefs.SetInt("Infection", PlayerPrefs.GetInt("Infection") + 5);
-                infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection");
+                infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
                 infectedOrNotText.text = "YOU WERE INFECTED";
             }
         }
@@ -332,6 +346,8 @@ public class HealthSystem : MonoBehaviour
     // Its is Used to Hide the all Popup
     public void hidePopup()
     {
+
+        tilesController.isPopup = false;
         Debug.Log("Civilian Count" + PlayerPrefs.GetInt("CIVILIAN_COUNT"));
         Debug.Log(isInfected);
         if (!isInfected)
@@ -340,21 +356,21 @@ public class HealthSystem : MonoBehaviour
             Debug.Log("Civilian Count" + PlayerPrefs.GetInt("CIVILIAN_COUNT"));
 
         }
-        for (int i = 0; i <= 34; i++)
+       /* for (int i = 0; i <= 34; i++)
         {
             if (firstDisbleList.Contains(i))
             {
-                if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") /*&& i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2")*/)
+                if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") *//*&& i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2")*//*)
                 {
                     GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = true;
 
                 }
             }
-        }
+        }*/
         unblockList1 = tilesController.unBlockList1;
         unblockList2 = tilesController.unBlockList2;
 
-        if (unblockList1.Count != 0) { 
+ /*       if (unblockList1.Count != 0) { 
         for (int i = 0; i < unblockList1.Count; i++) {
 
             GameObject.Find(unblockList1[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
@@ -371,7 +387,7 @@ public class HealthSystem : MonoBehaviour
                 Debug.Log(unblockList2.Count);
             }
         }
-       
+       */
         civilianFirstPopup.SetActive(false);
         civiliainSecondPopup.SetActive(false);
 
@@ -383,19 +399,19 @@ public class HealthSystem : MonoBehaviour
             PlayerPrefs.SetInt("Infection", 0);
 
 
-            for (int i = 0; i <= 34; i++)
+        /*    for (int i = 0; i <= 34; i++)
             {
                 if (firstDisbleList.Contains(i))
                 {
-                    if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") /*&& i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2")*/)
+                    if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") *//*&& i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2")*//*)
                     {
                         GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = false;
 
                     }
                 }
-            }
+            }*/
          
-            infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection");
+            infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
             deadPopup.SetActive(true);
         }
 
@@ -422,7 +438,7 @@ public class HealthSystem : MonoBehaviour
         if (PlayerPrefs.GetInt("Infection") >= 100)
         {
             PlayerPrefs.SetInt("Infection", 0);
-
+/*
 
             for (int i = 0; i <= 34; i++)
             {
@@ -435,8 +451,8 @@ public class HealthSystem : MonoBehaviour
                     }
                 }
             }
-
-            infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection");
+*/
+            infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
             deadPopup.SetActive(true);
         }
     }
@@ -446,7 +462,7 @@ public class HealthSystem : MonoBehaviour
         public void virusValidation() {
         hitValue = Random.Range(0,100);
 
-        virusChanceHit = 100 - maskValue;
+        virusChanceHit = 100 - PlayerPrefs.GetInt("DEFENCE");
         Debug.Log("hitValue   "+hitValue+"virusChanceHit   "+virusChanceHit);
         if (hitValue < virusChanceHit)
         {
@@ -455,7 +471,7 @@ public class HealthSystem : MonoBehaviour
            
         }
         else {
-            virusInfectionText.GetComponent<TextMeshProUGUI>().text = "PROTECTED BY MASK ("+maskValue+"%"+")";
+            virusInfectionText.GetComponent<TextMeshProUGUI>().text = "PROTECTED BY MASK (" + PlayerPrefs.GetInt("DEFENCE") + "%"+")";
 
         }
         }
@@ -485,7 +501,7 @@ public class HealthSystem : MonoBehaviour
         }
         }
         civilianPopupStatus(civilianSecondStatus);
-        infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection");
+        infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
 
     }
 
@@ -503,10 +519,15 @@ public class HealthSystem : MonoBehaviour
         health += damageAmount;
         
         Debug.Log(infectionInit + health);
-        infectionText.text = infectionInit + health;
-        attackText.text = attackInit + PlayerPrefs.GetInt("ATTACK");
-        defenceText.text = defenceInit + PlayerPrefs.GetInt("DEFENCE");
+        if (health > 100)
+        {
+            health = 100;
+        }
         PlayerPrefs.SetInt("Infection", health);
+        infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
+        attackText.text = PlayerPrefs.GetInt("ATTACK").ToString();
+        defenceText.text = PlayerPrefs.GetInt("DEFENCE").ToString()+"%";
+       
         return health;
      }
 
@@ -520,7 +541,7 @@ public class HealthSystem : MonoBehaviour
     // Its is Used to Calculate the civilian status Values
     public void civilianPopupStatus(Text civilianStatus) {
 
-        if (PlayerPrefs.GetInt("Infection") >= 75)
+      /*  if (PlayerPrefs.GetInt("Infection") >= 75)
         {
             civilianStatus.text = "CRITICAL";
         }
@@ -539,10 +560,27 @@ public class HealthSystem : MonoBehaviour
         else {
 
             civilianStatus.text = "HEALTHY";
-        }
+        }*/
+        civilianStatus.text = PlayerPrefs.GetInt("Infection") + "%";
 
     }
 
+
+    public void BuyMedicine() {
+
+        if (PlayerPrefs.GetInt("CoinCount") >= 5)
+        {
+
+            PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 5);
+            PlayerPrefs.SetInt("MEDICINE", PlayerPrefs.GetInt("MEDICINE") + 1);
+            coinText.text = PlayerPrefs.GetInt("CoinCount").ToString();
+            coinNLText.text = PlayerPrefs.GetInt("CoinCount").ToString();
+
+            medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
+            medsNLText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
+        } 
+    
+    }
 
 
     public int Heal(int healAmount) {

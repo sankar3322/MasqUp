@@ -15,11 +15,15 @@ public class VisualController : MonoBehaviour
 
 
 
-    [SerializeField] private GameObject coinText;
+    public List<int> unBlockList1;
+    public List<int> unBlockList2;
 
 
     public delegate void PressedEvent(VisualController vc);
     public PressedEvent OnPressed;
+
+
+   
 
     public bool isUnlocked, isClicked;
     public List<AudioClip> audioClips = new List<AudioClip>();
@@ -81,7 +85,32 @@ public class VisualController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(!isClicked && isUnlocked) Clicked();
+        string name = gameObject.name;
+        GameObject go = GameObject.Find("TilesController");
+        TilesController tilesController = go.GetComponent<TilesController>();
+        unBlockList1 = tilesController.unBlockList1;
+        unBlockList2 = tilesController.unBlockList2;
+
+
+        if (!tilesController.isPopup) { 
+        if (!isClicked && isUnlocked)
+        {
+
+            Clicked();
+
+        }
+        else
+        {
+
+            if (unBlockList1.Contains(int.Parse(name)) || unBlockList2.Contains(int.Parse(name)))
+            {
+                audioSource.clip = audioClips[4];
+                audioSource.Play();
+            }
+            Debug.Log("Name....." + name + "  Unblock1.........." + unBlockList1.Count + "     Unblock2" + unBlockList2.Count);
+
+        }
+    }
     }
 
     public void Clicked()

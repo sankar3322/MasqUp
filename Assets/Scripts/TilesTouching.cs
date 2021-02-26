@@ -21,8 +21,8 @@ public class TilesTouching : MonoBehaviour
     public List<int> unBlockList1;
     public List<int> unBlockList2;
 
-    int civilian1, civilian2, key;
-    int Monster1, Monster2;
+    int civilian1, civilian2, key, coin;
+    int Monster1, Monster2, medsPosition;
 
     ParticleSystem particleSystem;
 
@@ -30,7 +30,7 @@ public class TilesTouching : MonoBehaviour
 
     HealthSystem healthSystem;
 
-  
+    Sprite greenSprite, sand, keySprite, stone, coinSprite, civilianSprite, civilianMaskedSprite, virus_block, medSprite;
 
 
     // Start is called before the first frame update
@@ -60,14 +60,18 @@ public class TilesTouching : MonoBehaviour
 
     void OnClicked()
     {
-        Sprite greenSprite = Resources.Load("locked", typeof(Sprite)) as Sprite;
-        Sprite sand = Resources.Load("opened", typeof(Sprite)) as Sprite;
-        Sprite keySprite = Resources.Load("key", typeof(Sprite)) as Sprite;
-        Sprite stone = Resources.Load("virus", typeof(Sprite)) as Sprite;
-        Sprite coinSprite = Resources.Load("coin", typeof(Sprite)) as Sprite;
-        Sprite civilianSprite = Resources.Load("civilian", typeof(Sprite)) as Sprite;
-        Sprite civilianMaskedSprite = Resources.Load("MaskedCivilian", typeof(Sprite)) as Sprite;
-        Sprite virus_block = Resources.Load("Virus_Block", typeof(Sprite)) as Sprite;
+         greenSprite = Resources.Load("locked", typeof(Sprite)) as Sprite;
+         sand = Resources.Load("opened", typeof(Sprite)) as Sprite;
+         keySprite = Resources.Load("key", typeof(Sprite)) as Sprite;
+         stone = Resources.Load("virus", typeof(Sprite)) as Sprite;
+         coinSprite = Resources.Load("coin", typeof(Sprite)) as Sprite;
+         civilianSprite = Resources.Load("civilian", typeof(Sprite)) as Sprite;
+         civilianMaskedSprite = Resources.Load("MaskedCivilian", typeof(Sprite)) as Sprite;
+         virus_block = Resources.Load("Virus_Block", typeof(Sprite)) as Sprite;
+
+         medSprite = Resources.Load("meds", typeof(Sprite)) as Sprite;
+
+
         string name = gameObject.name;
 
         GameObject go = GameObject.Find("TilesController");
@@ -83,9 +87,12 @@ public class TilesTouching : MonoBehaviour
          key = PlayerPrefs.GetInt("Key");
          Monster1 = PlayerPrefs.GetInt("Monster1");
          Monster2 = PlayerPrefs.GetInt("Monster2");
-      
 
-         int coin = PlayerPrefs.GetInt("Coin");
+        medsPosition = PlayerPrefs.GetInt("SpawnMedicine");
+
+
+
+          coin = PlayerPrefs.GetInt("Coin");
          civilian1 = PlayerPrefs.GetInt("Civilian1");
          civilian2 = PlayerPrefs.GetInt("Civilian2");
 
@@ -145,118 +152,15 @@ public class TilesTouching : MonoBehaviour
             }
             else
             {
-                /*vc.audioSource.clip = vc.audioClips[7];
-                vc.audioSource.Play();*/
+                vc.audioSource.clip = vc.audioClips[4];
+                vc.audioSource.Play();
 
                 healthSystem.virusValidation();
-                GameObject virAttackText = GameObject.Find(name.ToString()).transform.Find("VirusAttack").gameObject;
+               
 
-                GameObject virDefenceText = GameObject.Find(name.ToString()).transform.Find("VirusDefence").gameObject;
+                virusAnimation(name);
 
-                MonsterHitValue = MonsterHitValue - 5;
-
-                virAttackText.GetComponent<TextMesh>().text = "A-5";
-                virDefenceText.GetComponent<TextMesh>().text = "H -"+MonsterHitValue.ToString();
-
-                if (MonsterHitValue == 0)
-                {
-
-                
-
-                    virAttackText.SetActive(false);
-                    virDefenceText.SetActive(false);
-
-                   
-
-                    if (name.Equals(Monster1.ToString()))
-                    {
-                        
-                        for (int i = 0; i < unBlockList1.Count; i++)
-                        {
-                            GameObject.Find(unBlockList1[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
-                            if (unBlockList1[i] == key)
-                            {
-
-                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = keySprite;
-                            }
-                            else if (unBlockList1[i] == civilian1)
-                            {
-
-                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
-                            }
-                            else if (unBlockList1[i] == civilian2)
-                            {
-
-                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
-                            }
-                            else if (unBlockList1[i] == coin)
-                            {
-
-                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = coinSprite;
-                            } else if (unBlockList1[i] == Monster2) {
-
-                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = stone;
-                            }
-                            else
-                            {
-
-                                GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
-                            }
-                            Debug.Log("monster1 Block" +unBlockList1[i]);
-                        }
-                        unBlockList1.Clear();
-
-                    }
-                    if (name.Equals(Monster2.ToString()))
-                    {
-                       
-                        for (int i = 0; i < unBlockList2.Count; i++)
-                        {
-
-                            GameObject.Find(unBlockList2[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
-                            if (unBlockList2[i] == key)
-                            {
-
-                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = keySprite;
-                            }
-                            else if (unBlockList2[i] == civilian1) {
-
-                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
-                            }
-                            else if (unBlockList2[i] == civilian2)
-                            {
-
-                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
-                            }
-                            else if (unBlockList2[i] == coin)
-                            {
-
-                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = coinSprite;
-                            }
-                            else if (unBlockList2[i] == Monster1)
-                            {
-
-                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = stone;
-                            }
-                            else
-                            {
-
-                                GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
-                            }
-                            Debug.Log("monster2 Block"+ unBlockList2[i]);
-
-                        }
-                        unBlockList2.Clear();
-                    }
-
-
-                    Debug.Log("Monster Pressed" + unBlockList1.Count);
-
-
-                    GameObject.Find(name).GetComponent<SpriteRenderer>().sprite = sand;
-                    GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
-
-                }
+               
                 
 
                
@@ -280,7 +184,7 @@ public class TilesTouching : MonoBehaviour
                 int c3 = int.Parse(name) + 1;
                 int c4 = int.Parse(name) + 5;
 
-            
+
 
                 if (name.Equals(coin.ToString()))
                 {
@@ -292,12 +196,16 @@ public class TilesTouching : MonoBehaviour
 
                     healthSystem.coinTextChange();
 
+                } else if (name.Equals(medsPosition.ToString())) {
+
+                    healthSystem.medsTextChange();
+                
                 }
                 else if (name.Equals(civilian1.ToString()) || name.Equals(civilian2.ToString()))
                 {
 
-                  /*  vc.audioSource.clip = vc.audioClips[5];
-                    vc.audioSource.Play();*/
+                    /*  vc.audioSource.clip = vc.audioClips[5];
+                      vc.audioSource.Play();*/
 
                     GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
 
@@ -309,12 +217,17 @@ public class TilesTouching : MonoBehaviour
                     else {
                         healthSystem.showCivilianFirst("C2");
 
-                    }          
+                    }
                 }
                 else
                 {
                     vc.audioSource.clip = vc.audioClips[6];
                     vc.audioSource.Play();
+                }
+                if (unBlockList1.Contains(int.Parse(name)) || unBlockList2.Contains(int.Parse(name))) {
+                    vc.audioSource.clip = vc.audioClips[4];
+                    vc.audioSource.Play();
+
                 }
 
                 GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
@@ -327,6 +240,17 @@ public class TilesTouching : MonoBehaviour
                     GameObject.Find(coin.ToString()).GetComponent<VisualController>().isUnlocked = true;
                     firstDisbleList.Add(coin);
                     disableList.Remove(coin);
+
+                }
+
+
+                if (!unBlockList1.Contains(medsPosition) && !unBlockList2.Contains(medsPosition) && disableList.Contains(medsPosition) && (c1.Equals(medsPosition) || (c2.Equals(medsPosition) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(medsPosition) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(medsPosition)))
+                {
+
+                    GameObject.Find(medsPosition.ToString()).GetComponent<SpriteRenderer>().sprite = medSprite;
+                    GameObject.Find(medsPosition.ToString()).GetComponent<VisualController>().isUnlocked = true;
+                    firstDisbleList.Add(medsPosition);
+                    disableList.Remove(medsPosition);
 
                 }
                 if (disableList.Contains(civilian1) && (c1.Equals(civilian1) || (c2.Equals(civilian1) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(civilian1) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(civilian1)))
@@ -395,9 +319,9 @@ public class TilesTouching : MonoBehaviour
 
                     GameObject.Find(Monster1.ToString()).GetComponent<SpriteRenderer>().sprite = stone;
                     GameObject.Find(Monster1.ToString()).GetComponent<VisualController>().isUnlocked = true;
-                    /*  virusAttackText.SetActive(true);
-                      virusDefenceText.SetActive(true);*/
+               
 
+                    GameObject.Find(Monster1.ToString()).GetComponent<Animator>().enabled = true;
 
                     GameObject virAttackText = GameObject.Find(Monster1.ToString()).transform.Find("VirusAttack").gameObject;
 
@@ -526,6 +450,10 @@ public class TilesTouching : MonoBehaviour
 
                     GameObject.Find(Monster2.ToString()).GetComponent<SpriteRenderer>().sprite = stone;
                     GameObject.Find(Monster2.ToString()).GetComponent<VisualController>().isUnlocked = true;
+
+                
+
+                    GameObject.Find(Monster2.ToString()).GetComponent<Animator>().enabled = true;
 
                     GameObject virAttackText = GameObject.Find(Monster2.ToString()).transform.Find("VirusAttack").gameObject;
 
@@ -656,7 +584,226 @@ public class TilesTouching : MonoBehaviour
 
 
 
-    IEnumerator delayPopup(string name) {
+  
+
+
+    IEnumerator keyAnimation()
+    {
+
+        Sprite openDoor = Resources.Load("doorOpened", typeof(Sprite)) as Sprite;
+        KeyAnimObj.transform.DOScale(2f, 1);
+
+        DOTween.Sequence()
+           .Append(KeyAnimObj.transform.DOMove(new Vector3(centerPos.transform.position.x, centerPos.transform.position.y, -0.4f), 0.4f))
+           .AppendInterval(0.5f).SetLoops(1);
+        yield return new WaitForSeconds(0.4f);
+
+        KeyAnimObj.transform.DOScale(0f, 1);
+
+        KeyAnimObj.transform.DOMove(new Vector3(doorPos.transform.position.x, doorPos.transform.position.y, -0.4f), 0.4f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        GameObject.Find(32.ToString()).GetComponent<SpriteRenderer>().sprite = openDoor;
+
+        vc.audioSource.clip = vc.audioClips[2];
+        vc.audioSource.Play();
+
+        Destroy(KeyAnimObj);
+
+    }
+
+
+    public void virusAnimation(string name)
+    {
+        StartCoroutine(virusDelay(name));
+    }
+
+    IEnumerator virusDelay(string name) {
+        GameObject VirusAnimObj = new GameObject();
+
+        GameObject virusPos = GameObject.Find(name);
+        GameObject target = GameObject.Find("30");
+
+        float xpos = 0f, ypos = 0f;
+
+        for (int i = 0; i <= 0; i++)
+        {
+
+            xpos += 0.05f;
+            ypos += 0.5f;
+
+
+
+            VirusAnimObj = (GameObject)Instantiate(Resources.Load("virusPrefab"));
+
+            VirusAnimObj.name = "virusPrefab" + i.ToString();
+
+            var KeyPanel = GameObject.Find("AnimKey");
+
+            VirusAnimObj.transform.SetParent(KeyPanel.transform, false);
+
+            VirusAnimObj.transform.position = new Vector3(virusPos.transform.position.x + xpos, virusPos.transform.position.y, -0.4f);
+
+           
+
+
+            string gameObjectname = "virusPrefab" + i;
+            GameObject gameObject = GameObject.Find(gameObjectname);
+
+            gameObject.transform.DOMove(new Vector3(target.transform.position.x, target.transform.position.y - 2.5f, -0.4f), 0.5f);
+
+            GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
+
+            yield return new WaitForSeconds(0.5f);
+
+
+            Destroy(gameObject);
+        }
+
+     
+
+
+        yield return new WaitForSeconds(0.3f);
+
+        GameObject.Find(name).GetComponent<VisualController>().isUnlocked = true;
+
+        GameObject virAttackText = GameObject.Find(name.ToString()).transform.Find("VirusAttack").gameObject;
+
+        GameObject virDefenceText = GameObject.Find(name.ToString()).transform.Find("VirusDefence").gameObject;
+
+        MonsterHitValue = MonsterHitValue - 5;
+
+
+
+        virAttackText.GetComponent<TextMesh>().text = "A-5";
+        virDefenceText.GetComponent<TextMesh>().text = "H -" + MonsterHitValue.ToString();
+
+        if (MonsterHitValue == 0)
+        {
+
+  
+
+            virAttackText.SetActive(false);
+            virDefenceText.SetActive(false);
+
+
+
+            GameObject.Find(name).GetComponent<Animator>().enabled = false;
+
+            if (name.Equals(Monster1.ToString()))
+            {
+
+                for (int i = 0; i < unBlockList1.Count; i++)
+                {
+                    GameObject.Find(unBlockList1[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
+                    if (unBlockList1[i] == key)
+                    {
+
+                        GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = keySprite;
+                    }
+                    else if (unBlockList1[i] == civilian1)
+                    {
+
+                        GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
+                    }
+                    else if (unBlockList1[i] == civilian2)
+                    {
+
+                        GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
+                    }
+                    else if (unBlockList1[i] == coin)
+                    {
+
+                        GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = coinSprite;
+                    }
+                    else if (unBlockList1[i] == medsPosition)
+                    {
+
+                        GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = medSprite;
+                    }
+                    else if (unBlockList1[i] == Monster2)
+                    {
+
+                        GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = stone;
+                    }
+                    else
+                    {
+
+                        GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
+                    }
+                    Debug.Log("monster1 Block" + unBlockList1[i]);
+                }
+                unBlockList1.Clear();
+
+            }
+            if (name.Equals(Monster2.ToString()))
+            {
+
+                for (int i = 0; i < unBlockList2.Count; i++)
+                {
+
+                    GameObject.Find(unBlockList2[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
+                    if (unBlockList2[i] == key)
+                    {
+
+                        GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = keySprite;
+                    }
+                    else if (unBlockList2[i] == civilian1)
+                    {
+
+                        GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
+                    }
+                    else if (unBlockList2[i] == civilian2)
+                    {
+
+                        GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
+                    }
+                    else if (unBlockList2[i] == coin)
+                    {
+
+                        GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = coinSprite;
+                    }
+                    else if (unBlockList2[i] == medsPosition)
+                    {
+
+                        GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = medSprite;
+                    }
+                    else if (unBlockList2[i] == Monster1)
+                    {
+
+                        GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = stone;
+                    }
+                    else
+                    {
+
+                        GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = greenSprite;
+                    }
+                    Debug.Log("monster2 Block" + unBlockList2[i]);
+
+                }
+                unBlockList2.Clear();
+            }
+
+
+            Debug.Log("Monster Pressed" + unBlockList1.Count);
+
+
+            GameObject.Find(name).GetComponent<SpriteRenderer>().sprite = sand;
+            GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
+
+        }
+
+
+
+        Debug.Log("TargetPos........" + target.transform.position);
+
+      
+
+    }
+
+
+      IEnumerator delayPopup(string name) {
 
         var panel = GameObject.Find("Canvas_Popup");
 
@@ -731,30 +878,5 @@ public class TilesTouching : MonoBehaviour
 
     }
 
-
-    IEnumerator keyAnimation()
-    {
-
-        Sprite openDoor = Resources.Load("doorOpened", typeof(Sprite)) as Sprite;
-        KeyAnimObj.transform.DOScale(2f, 1);
-
-        DOTween.Sequence()
-           .Append(KeyAnimObj.transform.DOMove(new Vector3(centerPos.transform.position.x, centerPos.transform.position.y, -0.4f), 0.4f))
-           .AppendInterval(0.5f).SetLoops(1);
-        yield return new WaitForSeconds(0.4f);
-
-        KeyAnimObj.transform.DOScale(0f, 1);
-
-        KeyAnimObj.transform.DOMove(new Vector3(doorPos.transform.position.x, doorPos.transform.position.y, -0.4f), 0.4f);
-
-        yield return new WaitForSeconds(0.5f);
-
-        GameObject.Find(32.ToString()).GetComponent<SpriteRenderer>().sprite = openDoor;
-
-        vc.audioSource.clip = vc.audioClips[2];
-        vc.audioSource.Play();
-
-        Destroy(KeyAnimObj);
-
-    }
+   
 }
