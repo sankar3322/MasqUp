@@ -39,6 +39,9 @@ public class SplashController : MonoBehaviour
         PlayerPrefs.SetInt("Level", 0);
         PlayerPrefs.SetInt("CIVILIAN_COUNT", 0);
         PlayerPrefs.SetInt("MEDICINE", 2);
+        PlayerPrefs.SetInt("DEFENCE",5);
+        PlayerPrefs.SetInt("ATTACK", 5);
+        PlayerPrefs.SetString("MASK_TYPE", "My first Mask");
         SceneManager.LoadScene(1);
     }
 }

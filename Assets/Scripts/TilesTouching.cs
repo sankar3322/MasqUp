@@ -659,13 +659,14 @@ public class TilesTouching : MonoBehaviour
 
 
             Destroy(gameObject);
+           
         }
 
-     
 
+        healthSystem.virusParticleEffect();
 
         yield return new WaitForSeconds(0.3f);
-
+        
         GameObject.Find(name).GetComponent<VisualController>().isUnlocked = true;
 
         GameObject virAttackText = GameObject.Find(name.ToString()).transform.Find("VirusAttack").gameObject;

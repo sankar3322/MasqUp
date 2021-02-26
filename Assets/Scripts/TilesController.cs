@@ -99,7 +99,12 @@ public class TilesController : MonoBehaviour
         {
             randomNumber.Remove(civilian2);
         }
-        int medicine = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
+        int medicine = 1000;
+        if (PlayerPrefs.GetInt("Level")%4==0) {
+
+             medicine = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
+        }
+     
 
 
         PlayerPrefs.SetInt("Key", key);
