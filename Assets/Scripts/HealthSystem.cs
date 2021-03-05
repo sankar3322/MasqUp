@@ -43,13 +43,17 @@ public class HealthSystem : MonoBehaviour
     private void Start()
     {
 
-/*
-        DOTween.Sequence()
-           .Append(coinText.transform.DOPunchScale(Vector3.one * 0.05f * 3, 1f, vibrato: 2, elasticity: 3f))
-           .AppendInterval(0.1f).SetLoops(-1);
-*/
+        
+               /* DOTween.Sequence()
+                   .Append(coinText.transform.DOPunchScale(Vector3.one * 0.05f * 3, 1f, vibrato: 2, elasticity: 3f))
+                   .AppendInterval(0.1f).SetLoops(2);*/
+
+
+     
+
         vc = GetComponent<VisualController>();
-        //PlayerPrefs.SetInt("MEDICINE", 2);
+      
+ 
         m1 = Resources.Load("m1", typeof(Sprite)) as Sprite;
         m2 = Resources.Load("m2", typeof(Sprite)) as Sprite;
         m3 = Resources.Load("m3", typeof(Sprite)) as Sprite;
@@ -107,7 +111,7 @@ public class HealthSystem : MonoBehaviour
         tilesController = go.GetComponent<TilesController>();
         firstDisbleList = tilesController.firstDisbleList;
         firstDisbleList.Add(32);
-
+        tilesController.isPopup = false;
         attackText.text = PlayerPrefs.GetInt("ATTACK").ToString();
         defenceText.text = PlayerPrefs.GetInt("DEFENCE").ToString()+"%";
         civilianCountText.text = PlayerPrefs.GetInt("CIVILIAN_COUNT").ToString();
@@ -145,13 +149,7 @@ public class HealthSystem : MonoBehaviour
 
 
            nextLevelPopup.SetActive(true);
-        /*   for (int i = 0; i <= 34; i++)
-          {
-              if (firstDisbleList.Contains(i))
-              {
-                      GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = false; 
-              }
-          }*/
+      
 
         tilesController.isPopup = true;
        
@@ -299,17 +297,7 @@ public class HealthSystem : MonoBehaviour
         firstDisbleList.Add(PlayerPrefs.GetInt("Monster2"));
         civilianChanceOfInfectionText.text = "CHANCE OF INFECTION " + civilianChanceInfection.ToString() + "%";
         Debug.Log(civilianChanceInfection);
-      /*  for (int i = 0; i <= 34; i++)
-        {
-            if (firstDisbleList.Contains(i))
-            {
-                if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") *//*&& i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2")*//*)
-                {
-                    GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = false;
-
-                }
-            }
-        }*/
+  
         civilianFirstPopup.SetActive(true);
       
     }
@@ -428,38 +416,11 @@ public class HealthSystem : MonoBehaviour
             Debug.Log("Civilian Count" + PlayerPrefs.GetInt("CIVILIAN_COUNT"));
 
         }
-       /* for (int i = 0; i <= 34; i++)
-        {
-            if (firstDisbleList.Contains(i))
-            {
-                if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") *//*&& i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2")*//*)
-                {
-                    GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = true;
-
-                }
-            }
-        }*/
+      
         unblockList1 = tilesController.unBlockList1;
         unblockList2 = tilesController.unBlockList2;
 
- /*       if (unblockList1.Count != 0) { 
-        for (int i = 0; i < unblockList1.Count; i++) {
 
-            GameObject.Find(unblockList1[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
-                Debug.Log(unblockList1.Count);
-            }
-    }
-        if (unblockList2.Count != 0)
-        {
-            for (int i = 0; i < unblockList2.Count; i++)
-            {
-
-                GameObject.Find(unblockList2[i].ToString()).GetComponent<VisualController>().isUnlocked = false;
-                
-                Debug.Log(unblockList2.Count);
-            }
-        }
-       */
         civilianFirstPopup.SetActive(false);
         civiliainSecondPopup.SetActive(false);
 
@@ -469,21 +430,9 @@ public class HealthSystem : MonoBehaviour
         if (PlayerPrefs.GetInt("Infection") >= 100)
         {
             PlayerPrefs.SetInt("Infection", 0);
-
-
-        /*    for (int i = 0; i <= 34; i++)
-            {
-                if (firstDisbleList.Contains(i))
-                {
-                    if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") *//*&& i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2")*//*)
-                    {
-                        GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = false;
-
-                    }
-                }
-            }*/
          
             infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
+            tilesController.isPopup = true;
             deadPopup.SetActive(true);
         }
 
@@ -530,20 +479,6 @@ public class HealthSystem : MonoBehaviour
         if (PlayerPrefs.GetInt("Infection") >= 100)
         {
             PlayerPrefs.SetInt("Infection", 0);
-/*
-
-            for (int i = 0; i <= 34; i++)
-            {
-                if (firstDisbleList.Contains(i))
-                {
-                    if (i != PlayerPrefs.GetInt("Civilian1") && i != PlayerPrefs.GetInt("Civilian2") && i != PlayerPrefs.GetInt("Monster1") && i != PlayerPrefs.GetInt("Monster2"))
-                    {
-                        GameObject.Find(i.ToString()).GetComponent<VisualController>().isUnlocked = false;
-
-                    }
-                }
-            }
-*/
             infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
             deadPopup.SetActive(true);
         }
