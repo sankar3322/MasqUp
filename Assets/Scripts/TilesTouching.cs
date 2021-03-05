@@ -15,7 +15,7 @@ public class TilesTouching : MonoBehaviour
     VisualController vc;
     public GameObject popUp;
 
-    GameObject doorPos, centerPos, keyPos, KeyAnimObj;
+    GameObject doorPos, centerPos, keyPos, KeyAnimObj, CoinAnimObj, bottomCoinPos, coinPos, MedsAnimObj,medsPos;
     List<int> disableList, firstDisbleList;
 
     public List<int> unBlockList1;
@@ -122,13 +122,18 @@ public class TilesTouching : MonoBehaviour
             PlayerPrefs.SetInt("Key",1000);
             doorPos = GameObject.Find("32");
 
+           
+
             centerPos = GameObject.Find("17");
             
             keyPos = GameObject.Find(key.ToString());
 
+            
+
             KeyAnimObj = (GameObject)Instantiate(Resources.Load("KeyObj"));
 
             var KeyPanel = GameObject.Find("AnimKey");
+
             KeyAnimObj.transform.SetParent(KeyPanel.transform, false);
 
             KeyAnimObj.transform.position = new Vector3(keyPos.transform.position.x, keyPos.transform.position.y, -0.4f);
@@ -191,14 +196,43 @@ public class TilesTouching : MonoBehaviour
                     vc.audioSource.clip = vc.audioClips[1];
                     vc.audioSource.Play();
                     CoinCount = CoinCount + 1;
+                    centerPos = GameObject.Find("17");
+                    coinPos = GameObject.Find(coin.ToString());
+                    bottomCoinPos = GameObject.Find("34");
+
+                    CoinAnimObj = (GameObject)Instantiate(Resources.Load("CoinObj"));
+
+                    var KeyPanel = GameObject.Find("AnimKey");
+
+                    CoinAnimObj.transform.SetParent(KeyPanel.transform, false);
+
+                    CoinAnimObj.transform.position = new Vector3(coinPos.transform.position.x, coinPos.transform.position.y, -0.4f);
+
+                    StartCoroutine(coinAnimation());
 
                     PlayerPrefs.SetInt("CoinCount", CoinCount);
 
-                    healthSystem.coinTextChange();
+                   
 
                 } else if (name.Equals(medsPosition.ToString())) {
 
-                    healthSystem.medsTextChange();
+                    centerPos = GameObject.Find("17");
+
+                    medsPos = GameObject.Find(medsPosition.ToString());
+
+                    bottomCoinPos = GameObject.Find("34");
+
+                    MedsAnimObj = (GameObject)Instantiate(Resources.Load("MedsObj"));
+
+                    var KeyPanel = GameObject.Find("AnimKey");
+
+                    MedsAnimObj.transform.SetParent(KeyPanel.transform, false);
+
+                    MedsAnimObj.transform.position = new Vector3(medsPos.transform.position.x, medsPos.transform.position.y, -0.4f);
+
+                    StartCoroutine(medsAnimation());
+
+                   
                 
                 }
                 else if (name.Equals(civilian1.ToString()) || name.Equals(civilian2.ToString()))
@@ -255,19 +289,25 @@ public class TilesTouching : MonoBehaviour
                 }
                 if (disableList.Contains(civilian1) && (c1.Equals(civilian1) || (c2.Equals(civilian1) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(civilian1) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(civilian1)))
                 {
-
+                    vc.audioSource.clip = vc.audioClips[8];
+                    vc.audioSource.Play();
+                    healthSystem.textShowValidation("HELP!!!");
                     GameObject.Find(civilian1.ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
                     GameObject.Find(civilian1.ToString()).GetComponent<VisualController>().isUnlocked = true;
                     disableList.Remove(civilian1);
+                    
 
                 }
 
                 if (disableList.Contains(civilian2) && (c1.Equals(civilian2) || (c2.Equals(civilian2) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(civilian2) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(civilian2)))
                 {
-
+                    vc.audioSource.clip = vc.audioClips[8];
+                    vc.audioSource.Play();
+                    healthSystem.textShowValidation("HELP!!!");
                     GameObject.Find(civilian2.ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
                     GameObject.Find(civilian2.ToString()).GetComponent<VisualController>().isUnlocked = true;
                     disableList.Remove(civilian2);
+                   
 
                 }
 
@@ -614,16 +654,67 @@ public class TilesTouching : MonoBehaviour
     }
 
 
+    IEnumerator coinAnimation()
+    {
+
+
+        CoinAnimObj.transform.DOScale(2f, 1);
+
+        DOTween.Sequence()
+           .Append(CoinAnimObj.transform.DOMove(new Vector3(centerPos.transform.position.x, centerPos.transform.position.y, -0.4f), 0.4f))
+           .AppendInterval(0.5f).SetLoops(1);
+        yield return new WaitForSeconds(0.4f);
+
+        CoinAnimObj.transform.DOScale(0f, 1);
+
+        CoinAnimObj.transform.DOMove(new Vector3(bottomCoinPos.transform.position.x, bottomCoinPos.transform.position.y-2.0f, -0.4f), 0.4f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        healthSystem.coinTextChange();
+
+        Destroy(CoinAnimObj);
+
+    }
+
+
+    IEnumerator medsAnimation()
+    {
+
+
+        MedsAnimObj.transform.DOScale(4f, 1);
+
+        DOTween.Sequence()
+           .Append(MedsAnimObj.transform.DOMove(new Vector3(centerPos.transform.position.x, centerPos.transform.position.y, -0.4f), 0.4f))
+           .AppendInterval(0.5f).SetLoops(1);
+        yield return new WaitForSeconds(0.4f);
+
+        MedsAnimObj.transform.DOScale(0f, 1);
+
+        MedsAnimObj.transform.DOMove(new Vector3(bottomCoinPos.transform.position.x, bottomCoinPos.transform.position.y - 3.0f, -0.4f), 0.4f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        healthSystem.medsTextChange();
+
+        Destroy(MedsAnimObj);
+
+    }
+
+
     public void virusAnimation(string name)
     {
         StartCoroutine(virusDelay(name));
     }
 
     IEnumerator virusDelay(string name) {
+
         GameObject VirusAnimObj = new GameObject();
 
         GameObject virusPos = GameObject.Find(name);
         GameObject target = GameObject.Find("30");
+
+       
 
         float xpos = 0f, ypos = 0f;
 
@@ -673,6 +764,8 @@ public class TilesTouching : MonoBehaviour
 
         GameObject virDefenceText = GameObject.Find(name.ToString()).transform.Find("VirusDefence").gameObject;
 
+
+
         MonsterHitValue = MonsterHitValue - 5;
 
 
@@ -683,7 +776,10 @@ public class TilesTouching : MonoBehaviour
         if (MonsterHitValue == 0)
         {
 
-  
+           
+
+            GameObject monster1Pos = GameObject.Find(Monster1.ToString());
+            GameObject monster2Pos = GameObject.Find(Monster2.ToString());
 
             virAttackText.SetActive(false);
             virDefenceText.SetActive(false);
@@ -691,6 +787,10 @@ public class TilesTouching : MonoBehaviour
 
 
             GameObject.Find(name).GetComponent<Animator>().enabled = false;
+
+
+            GameObject.Find(name).GetComponent<SpriteRenderer>().sprite = sand;
+            GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
 
             if (name.Equals(Monster1.ToString()))
             {
@@ -705,12 +805,17 @@ public class TilesTouching : MonoBehaviour
                     }
                     else if (unBlockList1[i] == civilian1)
                     {
+                        vc.audioSource.clip = vc.audioClips[8];
+                        vc.audioSource.Play();
+                        healthSystem.textShowValidation("HELP!!!");
 
                         GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
                     }
                     else if (unBlockList1[i] == civilian2)
                     {
-
+                        vc.audioSource.clip = vc.audioClips[8];
+                        vc.audioSource.Play();
+                        healthSystem.textShowValidation("HELP!!!");
                         GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
                     }
                     else if (unBlockList1[i] == coin)
@@ -735,6 +840,13 @@ public class TilesTouching : MonoBehaviour
                     }
                     Debug.Log("monster1 Block" + unBlockList1[i]);
                 }
+                GameObject VirusDefectEffect1 = (GameObject)Instantiate(Resources.Load("Virus Effect"));
+                VirusDefectEffect1.transform.position = new Vector3(monster1Pos.transform.position.x + xpos, monster1Pos.transform.position.y, -0.4f);
+                VirusDefectEffect1.GetComponent<ParticleSystem>().Play();
+
+                yield return new WaitForSeconds(0.5f);
+
+                Destroy(VirusDefectEffect1);
                 unBlockList1.Clear();
 
             }
@@ -783,15 +895,26 @@ public class TilesTouching : MonoBehaviour
                     Debug.Log("monster2 Block" + unBlockList2[i]);
 
                 }
+
+                GameObject VirusDefectEffect2 = (GameObject)Instantiate(Resources.Load("Virus Effect"));
+
+                VirusDefectEffect2.transform.position = new Vector3(monster2Pos.transform.position.x + xpos, monster2Pos.transform.position.y, -0.4f);
+                VirusDefectEffect2.GetComponent<ParticleSystem>().Play();
+
+                yield return new WaitForSeconds(0.5f);
+
+                Destroy(VirusDefectEffect2);
+
                 unBlockList2.Clear();
             }
 
 
             Debug.Log("Monster Pressed" + unBlockList1.Count);
+        
 
+            
 
-            GameObject.Find(name).GetComponent<SpriteRenderer>().sprite = sand;
-            GameObject.Find(name).GetComponent<VisualController>().isUnlocked = false;
+           
 
         }
 

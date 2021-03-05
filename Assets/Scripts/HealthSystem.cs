@@ -15,7 +15,7 @@ public class HealthSystem : MonoBehaviour
     private int defenceValue=0;
     private string infectionInit = "INFECTION LEVEL ", attackInit = "ATTACK - ", defenceInit = "DEFENCE - ";
     public Text coinText, infectionText, attackText, defenceText, civilianSecondStatus, civilianFirstStatus, civilianFirstMaskProText, civilianSecondMaskProText, 
-        youChanceOfInfectionText, civilianChanceOfInfectionText, infectedOrNotText, civilianStatusOneText, civilianStatusSecondText, civilianTopText, medicineText, maskProtectionYouValue;
+        youChanceOfInfectionText, civilianChanceOfInfectionText, infectedOrNotText, civilianStatusOneText, civilianStatusSecondText, civilianTopText, medicineText, maskProtectionYouValue, civilianCountText;
 
     public GameObject civilianFirstPopup, civiliainSecondPopup, virusFirstPopup, virusSecondPopup, deadPopup, civilianFirstImage, civilianSecondImage, continueBtn, carryOnBtn, virusInfectionText, ignoreBtn;
 
@@ -36,11 +36,19 @@ public class HealthSystem : MonoBehaviour
 
     public Image maskImage;
 
+    VisualController vc;
+
 
 
     private void Start()
     {
 
+/*
+        DOTween.Sequence()
+           .Append(coinText.transform.DOPunchScale(Vector3.one * 0.05f * 3, 1f, vibrato: 2, elasticity: 3f))
+           .AppendInterval(0.1f).SetLoops(-1);
+*/
+        vc = GetComponent<VisualController>();
         //PlayerPrefs.SetInt("MEDICINE", 2);
         m1 = Resources.Load("m1", typeof(Sprite)) as Sprite;
         m2 = Resources.Load("m2", typeof(Sprite)) as Sprite;
@@ -85,17 +93,7 @@ public class HealthSystem : MonoBehaviour
         takeMedsEffects.Stop();
         virusEffect.Stop();
 
-        if (PlayerPrefs.GetInt("CIVILIAN_COUNT") == null)
-        {
-            PlayerPrefs.SetInt("CIVILIAN_COUNT", 0);
-        }
-
-       
-        if(PlayerPrefs.GetInt("MEDICINE")==0 || PlayerPrefs.GetInt("MEDICINE") == null)
-        {
-            PlayerPrefs.SetInt("MEDICINE", 2);
-        }
-        
+     
         medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
         isInfected = false;
        
@@ -112,7 +110,7 @@ public class HealthSystem : MonoBehaviour
 
         attackText.text = PlayerPrefs.GetInt("ATTACK").ToString();
         defenceText.text = PlayerPrefs.GetInt("DEFENCE").ToString()+"%";
-
+        civilianCountText.text = PlayerPrefs.GetInt("CIVILIAN_COUNT").ToString();
 
 
 
@@ -395,6 +393,7 @@ public class HealthSystem : MonoBehaviour
     public void giveMedsValidation() {
        
         if (isInfected) {
+            if (PlayerPrefs.GetInt("MEDICINE") > 0) { 
             PlayerPrefs.SetInt("MEDICINE", PlayerPrefs.GetInt("MEDICINE") - 1);
             civilianStatusSecondText.text = "HEALTHY";
             civilianTopText.text = "CIVILIAN WAS NOT INFECTED";
@@ -404,8 +403,15 @@ public class HealthSystem : MonoBehaviour
             {
                 civilianSecondImage.GetComponent<Image>().sprite = civilianNoMaskHappySprite;
             }
-            isInfected = false;
-        }
+                 textShowValidation("THANK YOU DOCTOR!!!");
+                 vc.audioSource.clip = vc.audioClips[5];
+                 vc.audioSource.Play();
+
+                PlayerPrefs.SetInt("CIVILIAN_COUNT", PlayerPrefs.GetInt("CIVILIAN_COUNT") + 1);
+                civilianCountText.text = PlayerPrefs.GetInt("CIVILIAN_COUNT").ToString();
+                isInfected = false;
+            }
+            }
         }
 
 
@@ -418,7 +424,7 @@ public class HealthSystem : MonoBehaviour
         Debug.Log(isInfected);
         if (!isInfected)
         {
-            PlayerPrefs.SetInt("CIVILIAN_COUNT", PlayerPrefs.GetInt("CIVILIAN_COUNT") + 1);
+           
             Debug.Log("Civilian Count" + PlayerPrefs.GetInt("CIVILIAN_COUNT"));
 
         }
@@ -494,6 +500,26 @@ public class HealthSystem : MonoBehaviour
       
     }
 
+    public void textShowValidation(string textValue) {
+
+
+        StartCoroutine(textValidation(textValue));
+
+    }
+
+
+    IEnumerator textValidation(string textValue) {
+
+
+        Debug.Log(textValue);
+   
+        virusFirstPopup.SetActive(true);
+        virusInfectionText.GetComponent<TextMeshProUGUI>().text = textValue;
+        yield return new WaitForSeconds(1f);
+        virusFirstPopup.SetActive(false);
+
+    }
+
     IEnumerator virusDelayPopup()
     {
     
@@ -549,7 +575,7 @@ public class HealthSystem : MonoBehaviour
         if (PlayerPrefs.GetInt("Infection") > 0 && PlayerPrefs.GetInt("Infection") <= 100)
         {
             
-            if (PlayerPrefs.GetInt("MEDICINE") > 0 && PlayerPrefs.GetInt("MEDICINE") <= 100) { 
+            if (PlayerPrefs.GetInt("MEDICINE") > 0) { 
 
             PlayerPrefs.SetInt("MEDICINE", PlayerPrefs.GetInt("MEDICINE") - 1);
                 if (PlayerPrefs.GetInt("Infection") <= 10)
@@ -561,6 +587,7 @@ public class HealthSystem : MonoBehaviour
 
                     PlayerPrefs.SetInt("Infection", PlayerPrefs.GetInt("Infection") - 10);
                 }
+            
                 takeMedsEffects.Play();
                 Debug.Log("TakeMeds");
             medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
