@@ -4,16 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class HealthSystem : MonoBehaviour
 {
     private int health;
-    private int healthMax;
-    private int attackValue=0;
-    private int defenceValue=0;
-    private string infectionInit = "INFECTION LEVEL ", attackInit = "ATTACK - ", defenceInit = "DEFENCE - ";
+    private string infectionInit = "INFECTION LEVEL ";
     public Text coinText, infectionText, attackText, defenceText, civilianSecondStatus, civilianFirstStatus, civilianFirstMaskProText, civilianSecondMaskProText, 
         youChanceOfInfectionText, civilianChanceOfInfectionText, infectedOrNotText, civilianStatusOneText, civilianStatusSecondText, civilianTopText, medicineText, maskProtectionYouValue, civilianCountText;
 
@@ -42,14 +38,16 @@ public class HealthSystem : MonoBehaviour
 
     private void Start()
     {
-
         
-               /* DOTween.Sequence()
-                   .Append(coinText.transform.DOPunchScale(Vector3.one * 0.05f * 3, 1f, vibrato: 2, elasticity: 3f))
-                   .AppendInterval(0.1f).SetLoops(2);*/
+
+      /*  DOTween.Sequence()
+           .Append(coinText.transform.DOPunchRotation(Vector3.one * 0.5f * 3, 1f, vibrato: 2, elasticity: 3f))
+           .AppendInterval(0.1f).SetLoops(-1);*/
+            
+
+        //coinText.transform.DOShakeScale(0.60f, new Vector3(0.05f, 0f, 0.05f), 10, 0);
 
 
-     
 
         vc = GetComponent<VisualController>();
       
@@ -115,7 +113,14 @@ public class HealthSystem : MonoBehaviour
         attackText.text = PlayerPrefs.GetInt("ATTACK").ToString();
         defenceText.text = PlayerPrefs.GetInt("DEFENCE").ToString()+"%";
         civilianCountText.text = PlayerPrefs.GetInt("CIVILIAN_COUNT").ToString();
+        coinText.text = PlayerPrefs.GetInt("CoinCount").ToString();
 
+
+        textUpdate(attackText);
+        textUpdate(defenceText);
+        textUpdate(civilianCountText);
+        textUpdate(medicineText);
+        textUpdate(coinText);
 
 
         civilianMaskedSprite = Resources.Load("Masked", typeof(Sprite)) as Sprite;
@@ -135,7 +140,11 @@ public class HealthSystem : MonoBehaviour
     // Its is Used to Change the Coni Text Value
     public void coinTextChange()
     {
+
+       
         coinText.text = PlayerPrefs.GetInt("CoinCount").ToString();
+
+        textUpdate(coinText);
     }
 
     public void medsTextChange()
@@ -143,6 +152,7 @@ public class HealthSystem : MonoBehaviour
         PlayerPrefs.SetInt("MEDICINE", PlayerPrefs.GetInt("MEDICINE") + 1);
 
         medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
+        textUpdate(medicineText);
     }
 
     public void nextLevel() {
@@ -202,6 +212,7 @@ public class HealthSystem : MonoBehaviour
                 takeMedsEffects.Play();
                 Debug.Log("TakeMeds");
                 medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
+                textUpdate(medicineText);
             }
 
         }
@@ -309,6 +320,7 @@ public class HealthSystem : MonoBehaviour
         DOTween.Sequence()
            .Append(carryOnBtn.transform.DOPunchScale(Vector3.one * 0.03f * 3, 1f, vibrato: 2, elasticity: 3f))
            .AppendInterval(0.1f).SetLoops(-1);
+
         if (civilianInfectedStatus == 0)
         {
 
@@ -387,17 +399,21 @@ public class HealthSystem : MonoBehaviour
             civilianTopText.text = "CIVILIAN WAS NOT INFECTED";
             Debug.Log("GiveMeds");
             medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
+                textUpdate(medicineText);
             if (civilianType.Equals("C1"))
             {
                 civilianSecondImage.GetComponent<Image>().sprite = civilianNoMaskHappySprite;
             }
                  textShowValidation("THANK YOU DOCTOR!!!");
-                 vc.audioSource.clip = vc.audioClips[5];
-                 vc.audioSource.Play();
-
                 PlayerPrefs.SetInt("CIVILIAN_COUNT", PlayerPrefs.GetInt("CIVILIAN_COUNT") + 1);
                 civilianCountText.text = PlayerPrefs.GetInt("CIVILIAN_COUNT").ToString();
+                textUpdate(civilianCountText);
+                Debug.Log("Civilian Count" + PlayerPrefs.GetInt("CIVILIAN_COUNT"));
                 isInfected = false;
+                vc.audioSource.clip = vc.audioClips[1];
+                 vc.audioSource.Play();
+
+            
             }
             }
         }
@@ -480,6 +496,7 @@ public class HealthSystem : MonoBehaviour
         {
             PlayerPrefs.SetInt("Infection", 0);
             infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
+            tilesController.isPopup = true;
             deadPopup.SetActive(true);
         }
     }
@@ -526,7 +543,8 @@ public class HealthSystem : MonoBehaviour
                 takeMedsEffects.Play();
                 Debug.Log("TakeMeds");
             medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
-        }
+                textUpdate(medicineText);
+            }
         }
         civilianPopupStatus(civilianSecondStatus);
         infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
@@ -555,16 +573,12 @@ public class HealthSystem : MonoBehaviour
         infectionText.text = infectionInit + PlayerPrefs.GetInt("Infection")+"%";
         attackText.text = PlayerPrefs.GetInt("ATTACK").ToString();
         defenceText.text = PlayerPrefs.GetInt("DEFENCE").ToString()+"%";
-       
+        //textUpdate(defenceText);
         return health;
      }
 
 
 
-    public float GetHealthPercent() {
-        return (float)health / healthMax;
-    
-    }
 
     // Its is Used to Calculate the civilian status Values
     public void civilianPopupStatus(Text civilianStatus) {
@@ -606,6 +620,9 @@ public class HealthSystem : MonoBehaviour
 
             medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
             medsNLText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
+
+            textUpdate(coinText);
+            textUpdate(medicineText);
         } 
     
     }
@@ -657,8 +674,13 @@ public class HealthSystem : MonoBehaviour
             }
 
             defenceText.text = PlayerPrefs.GetInt("DEFENCE").ToString() + "%";
+
+            textUpdate(defenceText);
+
             coinText.text = PlayerPrefs.GetInt("CoinCount").ToString();
             coinNLText.text = PlayerPrefs.GetInt("CoinCount").ToString();
+
+            textUpdate(coinText);
 
         }
 
@@ -671,5 +693,33 @@ public class HealthSystem : MonoBehaviour
         health -= healAmount;
         if (health < 0) health = 0;
         return health;
+    }
+
+
+
+
+    public void textUpdate(Text text)
+    {
+
+        StartCoroutine(UpdateScoreText(text));
+    }
+
+
+    protected virtual IEnumerator UpdateScoreText(Text text)
+    {
+        text.transform.DOScale(new Vector3(0.8f, 1f, 0.8f), .2f);
+
+        yield return new WaitForSeconds(0.3f);
+
+
+        text.transform.DOPunchRotation(new Vector3(180, 0), 0.8f, 8, 0.5f);
+
+        yield return new WaitForSeconds(0.9f);
+
+        text.transform.DOScale(new Vector3(0.8f, 0.8f, 0.8f), .2f);
+
+       
+
+
     }
 }

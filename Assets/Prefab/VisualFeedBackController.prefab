@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2199956744582747649}
-  - component: {fileID: 2199956744582747650}
   - component: {fileID: 2199956744582747648}
   m_Layer: 0
   m_Name: VisualFeedBackController
@@ -32,18 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2199956744582747650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2199956744582747651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01df0eec8f66e4db9af920da818597ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &2199956744582747648
 AudioSource:
   m_ObjectHideFlags: 0

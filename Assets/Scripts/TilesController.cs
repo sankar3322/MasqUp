@@ -82,11 +82,11 @@ public class TilesController : MonoBehaviour
         {
             randomNumber.Remove(monster2);
         }
-        int coin = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
+        int coin1 = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
 
-        if (randomNumber.Contains(coin))
+        if (randomNumber.Contains(coin1))
         {
-            randomNumber.Remove(coin);
+            randomNumber.Remove(coin1);
         }
         int civilian1 = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
 
@@ -104,18 +104,37 @@ public class TilesController : MonoBehaviour
 
              medicine = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
         }
-     
+        if (randomNumber.Contains(medicine))
+        {
+            randomNumber.Remove(medicine);
+        }
+        int coin2 = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
+
+        if (randomNumber.Contains(coin2))
+        {
+            randomNumber.Remove(coin2);
+        }
+        int coin3 = 1001;
+        if (PlayerPrefs.GetInt("Level") % 3 == 0)
+        {
+            coin3 = randomNumber[UnityEngine.Random.Range(0, randomNumber.Count)];
+        }
+
 
 
         PlayerPrefs.SetInt("Key", key);
         PlayerPrefs.SetInt("Monster1", monster1);
         PlayerPrefs.SetInt("Monster2", monster2);
-        PlayerPrefs.SetInt("Coin", coin);
+        PlayerPrefs.SetInt("Coin", coin1);
+
+        PlayerPrefs.SetInt("Coin2", coin2);
+        PlayerPrefs.SetInt("Coin3", coin3);
+
         PlayerPrefs.SetInt("Civilian1", civilian1);
         PlayerPrefs.SetInt("Civilian2", civilian2);
         PlayerPrefs.SetInt("SpawnMedicine", medicine);
 
-        Debug.Log("Key............" + key + ".....monster1........" + monster1 + "...........monster2..........." + monster2+".........Coin.........."+coin+"........Civilian 1 and 2...."+civilian1+","+civilian2);
+        Debug.Log("Key............" + key + ".....monster1........" + monster1 + "...........monster2..........." + monster2+".........Coin.........."+coin1+"........Civilian 1 and 2...."+civilian1+","+civilian2);
         Debug.Log("medicine............."+medicine);
 
 
@@ -198,11 +217,15 @@ public class TilesController : MonoBehaviour
     public void Reload() {
 
 
-        //Application.LoadLevel(1);
-        SceneManager.LoadScene(1);
+        PlayerPrefs.SetInt("CoinCount", 0);
+        PlayerPrefs.SetInt("Infection", 0);
         PlayerPrefs.SetInt("Level", 1);
-
-        Debug.Log("Reload");
+        PlayerPrefs.SetInt("CIVILIAN_COUNT", 0);
+        PlayerPrefs.SetInt("MEDICINE", 2);
+        PlayerPrefs.SetInt("DEFENCE", 5);
+        PlayerPrefs.SetInt("ATTACK", 5);
+        PlayerPrefs.SetString("MASK_TYPE", "My first Mask");
+        SceneManager.LoadScene(1);
     }
 
 

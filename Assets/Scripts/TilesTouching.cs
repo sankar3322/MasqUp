@@ -37,10 +37,8 @@ public class TilesTouching : MonoBehaviour
     void Start()
     {
         isKey = false;
-        healthSystem.coinTextChange();
+        //healthSystem.coinTextChange();
         MonsterHitValue = 10;
-        
-
     }
 
 
@@ -93,6 +91,7 @@ public class TilesTouching : MonoBehaviour
 
 
           coin = PlayerPrefs.GetInt("Coin");
+
          civilian1 = PlayerPrefs.GetInt("Civilian1");
          civilian2 = PlayerPrefs.GetInt("Civilian2");
 
@@ -864,11 +863,17 @@ public class TilesTouching : MonoBehaviour
                     }
                     else if (unBlockList2[i] == civilian1)
                     {
+                        vc.audioSource.clip = vc.audioClips[8];
+                        vc.audioSource.Play();
+                        healthSystem.textShowValidation("HELP!!!");
 
                         GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianSprite;
                     }
                     else if (unBlockList2[i] == civilian2)
                     {
+                        vc.audioSource.clip = vc.audioClips[8];
+                        vc.audioSource.Play();
+                        healthSystem.textShowValidation("HELP!!!");
 
                         GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = civilianMaskedSprite;
                     }

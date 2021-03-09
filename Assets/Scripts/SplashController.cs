@@ -36,7 +36,7 @@ public class SplashController : MonoBehaviour
 
         PlayerPrefs.SetInt("CoinCount",0);
         PlayerPrefs.SetInt("Infection", 0);
-        PlayerPrefs.SetInt("Level", 0);
+        PlayerPrefs.SetInt("Level", 1);
         PlayerPrefs.SetInt("CIVILIAN_COUNT", 0);
         PlayerPrefs.SetInt("MEDICINE", 2);
         PlayerPrefs.SetInt("DEFENCE",5);
