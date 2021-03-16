@@ -35,6 +35,9 @@ public class HealthSystem : MonoBehaviour
     VisualController vc;
 
 
+    public Sprite[] sadCivilianSprites, happyCivilianSprites, maskPopupSprites;
+
+
 
     private void Start()
     {
@@ -262,13 +265,13 @@ public class HealthSystem : MonoBehaviour
 
             if (civilianType.Equals("C1"))
             {
-                civilianFirstImage.GetComponent<Image>().sprite = civilianNoMaskSprite;
+                civilianFirstImage.GetComponent<Image>().sprite = sadCivilianSprites[PlayerPrefs.GetInt("UnMaskCivilian")];
                 civilianFirstMaskProText.text = "NO MASK";
                 youChanceInfection = 100 - (PlayerPrefs.GetInt("DEFENCE") + 0);
 
             }
             else {
-                civilianFirstImage.GetComponent<Image>().sprite = civilianMaskedSprite;
+                civilianFirstImage.GetComponent<Image>().sprite = maskPopupSprites[PlayerPrefs.GetInt("MaskCivilian")];
                 civilianFirstMaskProText.text = "MASKED";
                 youChanceInfection = 100 - (PlayerPrefs.GetInt("DEFENCE") + 30);
 
@@ -291,14 +294,14 @@ public class HealthSystem : MonoBehaviour
 
             if (civilianType.Equals("C1"))
             {
-                civilianFirstImage.GetComponent<Image>().sprite = civilianNoMaskSprite;
+                civilianFirstImage.GetComponent<Image>().sprite = sadCivilianSprites[PlayerPrefs.GetInt("UnMaskCivilian")]; ;
                 civilianFirstMaskProText.text = "NO MASK";
                 civilianChanceInfection = 100 - (PlayerPrefs.GetInt("DEFENCE") + 0);
 
             }
             else
             {
-                civilianFirstImage.GetComponent<Image>().sprite = civilianMaskedSprite;
+                civilianFirstImage.GetComponent<Image>().sprite = maskPopupSprites[PlayerPrefs.GetInt("MaskCivilian")]; ;
                 civilianFirstMaskProText.text = "MASKED";
                 civilianChanceInfection = 100 - (PlayerPrefs.GetInt("DEFENCE") + 30);
 
@@ -348,12 +351,12 @@ public class HealthSystem : MonoBehaviour
         Debug.Log("infectedOrNot" + infectedOrNot);
         if (civilianType.Equals("C1"))
         {
-            civilianSecondImage.GetComponent<Image>().sprite = civilianNoMaskSprite;
+            civilianSecondImage.GetComponent<Image>().sprite = sadCivilianSprites[PlayerPrefs.GetInt("UnMaskCivilian")]; ;
             civilianSecondMaskProText.text = "NO MASK";
         }
         else
         {
-            civilianSecondImage.GetComponent<Image>().sprite = civilianMaskedSprite;
+            civilianSecondImage.GetComponent<Image>().sprite = maskPopupSprites[PlayerPrefs.GetInt("MaskCivilian")]; ;
             civilianSecondMaskProText.text = "MASKED";
 
         }
@@ -372,7 +375,7 @@ public class HealthSystem : MonoBehaviour
                 infectedOrNotText.text = "YOU WERE NOT INFECTED";
                 if (civilianType.Equals("C1"))
                 {
-                    civilianSecondImage.GetComponent<Image>().sprite = civilianNoMaskHappySprite;
+                    civilianSecondImage.GetComponent<Image>().sprite = happyCivilianSprites[PlayerPrefs.GetInt("UnMaskCivilian")]; ;
                 }
 
             }
@@ -400,10 +403,14 @@ public class HealthSystem : MonoBehaviour
             Debug.Log("GiveMeds");
             medicineText.text = PlayerPrefs.GetInt("MEDICINE").ToString();
                 textUpdate(medicineText);
-            if (civilianType.Equals("C1"))
-            {
-                civilianSecondImage.GetComponent<Image>().sprite = civilianNoMaskHappySprite;
-            }
+                if (civilianType.Equals("C1"))
+                {
+                    civilianSecondImage.GetComponent<Image>().sprite = happyCivilianSprites[PlayerPrefs.GetInt("UnMaskCivilian")];
+                }
+                else {
+                    civilianSecondImage.GetComponent<Image>().sprite = maskPopupSprites[PlayerPrefs.GetInt("MaskCivilian")];
+                }
+
                  textShowValidation("THANK YOU DOCTOR!!!");
                 PlayerPrefs.SetInt("CIVILIAN_COUNT", PlayerPrefs.GetInt("CIVILIAN_COUNT") + 1);
                 civilianCountText.text = PlayerPrefs.GetInt("CIVILIAN_COUNT").ToString();
@@ -610,10 +617,10 @@ public class HealthSystem : MonoBehaviour
 
     public void BuyMedicine() {
 
-        if (PlayerPrefs.GetInt("CoinCount") >= 5)
+        if (PlayerPrefs.GetInt("CoinCount") >= 2)
         {
 
-            PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 5);
+            PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 2);
             PlayerPrefs.SetInt("MEDICINE", PlayerPrefs.GetInt("MEDICINE") + 1);
             coinText.text = PlayerPrefs.GetInt("CoinCount").ToString();
             coinNLText.text = PlayerPrefs.GetInt("CoinCount").ToString();
@@ -629,7 +636,7 @@ public class HealthSystem : MonoBehaviour
 
 
     public void BuyMask() {
-        if (PlayerPrefs.GetInt("CoinCount") >= 5)
+        if (PlayerPrefs.GetInt("CoinCount") >= 2)
         {
           
             
@@ -638,14 +645,14 @@ public class HealthSystem : MonoBehaviour
 
                 PlayerPrefs.SetInt("DEFENCE", 10);
                 PlayerPrefs.SetString("MASK_TYPE", "Homemade Mask");
-                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 5);
+                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 2);
                 maskImage.sprite = m2;
 
             } else if (PlayerPrefs.GetInt("DEFENCE") == 10) {
 
                 PlayerPrefs.SetInt("DEFENCE", 25);
                 PlayerPrefs.SetString("MASK_TYPE", "Mask name 3");
-                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 5);
+                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 2);
                 maskImage.sprite = m3;
             }
             else if (PlayerPrefs.GetInt("DEFENCE") == 25)
@@ -653,14 +660,14 @@ public class HealthSystem : MonoBehaviour
 
                 PlayerPrefs.SetInt("DEFENCE", 30);
                 PlayerPrefs.SetString("MASK_TYPE", "Mask 4");
-                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 5);
+                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 2);
                 maskImage.sprite = m4;
             }
             else if (PlayerPrefs.GetInt("DEFENCE") == 30)
             {
                 PlayerPrefs.SetInt("DEFENCE", 50);
                 PlayerPrefs.SetString("MASK_TYPE", "Mask 5");
-                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 5);
+                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 2);
                 maskImage.sprite = m5;
 
             }
@@ -669,7 +676,7 @@ public class HealthSystem : MonoBehaviour
 
                 PlayerPrefs.SetInt("DEFENCE", 90);
                 PlayerPrefs.SetString("MASK_TYPE", "Mask 6");
-                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 5);
+                PlayerPrefs.SetInt("CoinCount", PlayerPrefs.GetInt("CoinCount") - 2);
                 maskImage.sprite = m6;
             }
 
@@ -712,9 +719,9 @@ public class HealthSystem : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
 
-        text.transform.DOPunchRotation(new Vector3(180, 0), 0.8f, 8, 0.5f);
+        text.transform.DOPunchRotation(new Vector3(180, 0), 1.0f, 8, 0.5f);
 
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(0.6f);
 
         text.transform.DOScale(new Vector3(0.8f, 0.8f, 0.8f), .2f);
 

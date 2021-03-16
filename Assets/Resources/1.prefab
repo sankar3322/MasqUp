@@ -321,6 +321,22 @@ MonoBehaviour:
   popUp: {fileID: 6832106555624228792, guid: 926fe6530cd0d334b87d0953c42044e9, type: 3}
   unBlockList1: 
   unBlockList2: 
+  maskCivilianSprites:
+  - {fileID: 21300000, guid: 8dfbcd8086f70604a9a29929d649bc0d, type: 3}
+  - {fileID: 21300000, guid: 3b93292b54d18a647beaf1d9ac08938f, type: 3}
+  - {fileID: 21300000, guid: 502c55a38a0cd5946a348000b0ada83b, type: 3}
+  - {fileID: 21300000, guid: ed4e0dc84ab3bf44daceef8c0e9c5407, type: 3}
+  - {fileID: 21300000, guid: 83c04e94e15816a43bc20e197c0e083b, type: 3}
+  - {fileID: 21300000, guid: caf90de6c6d8e874dacaf66fdc3931eb, type: 3}
+  - {fileID: 21300000, guid: 2882411bfeadf9d48b2604a2ad6a6b55, type: 3}
+  unMaskCivilianSprites:
+  - {fileID: 21300000, guid: d6bc1a7710fd47a408a3474e2ae99dad, type: 3}
+  - {fileID: 21300000, guid: e766509d6ad5cb1458cb2f2569ed3c9a, type: 3}
+  - {fileID: 21300000, guid: f48af59a901b4e1428ec26e26322d09e, type: 3}
+  - {fileID: 21300000, guid: fe5c1248735b1a4409c998b1752e7161, type: 3}
+  - {fileID: 21300000, guid: 660450f4a23063f40a3fb5faf9817299, type: 3}
+  - {fileID: 21300000, guid: 3a36ba480c915e7419ba63e3f3f9567b, type: 3}
+  - {fileID: 21300000, guid: 85d13c9cc1f0f3e459d658b169d0f2cf, type: 3}
 --- !u!114 &1692436183792292737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +373,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ba4f177f0e1b65c449510904f69879d6, type: 3}
   - {fileID: 8300000, guid: 74ed748ded9ed4ad5b73f71dd28f89d8, type: 3}
   - {fileID: 8300000, guid: 24bc118f894f2d14fbb2b27aaef63c70, type: 3}
-  - {fileID: 8300000, guid: 232044005acdbe44dafc6f4c355d1bf8, type: 3}
+  - {fileID: 8300000, guid: 3b512752fbe399f4fb202985de716bdf, type: 3}
   audioSource: {fileID: 0}
 --- !u!198 &17730033
 ParticleSystem:
