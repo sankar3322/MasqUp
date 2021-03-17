@@ -182,7 +182,7 @@ public class TilesController : MonoBehaviour
                     tile.GetComponent<SpriteRenderer>().sprite = doorSprite;
                     disableList.Remove(32);
                 }
-                tile.GetComponent<Animator>().enabled = false;
+                //tile.GetComponent<Animator>().enabled = false;
 
                 if ((tile.name.Equals(c1.ToString()) && c1 <= 34 && c1 >= 0) || (tile.name.Equals(c2.ToString()) && c2 <= 34 && c2 >= 0) || (tile.name.Equals(c3.ToString()) && c3 <= 34 && c3 >= 0) || (tile.name.Equals(c4.ToString()) && c4 <= 34 && c4 >= 0))
                 {

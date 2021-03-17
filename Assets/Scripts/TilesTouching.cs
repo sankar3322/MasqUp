@@ -26,7 +26,7 @@ public class TilesTouching : MonoBehaviour
 
     ParticleSystem particleSystem;
 
-    int CoinCount = 0, MedicineCount = 0, MonsterHitValue;
+    int MonsterHitValue;
 
     HealthSystem healthSystem;
 
@@ -53,7 +53,7 @@ public class TilesTouching : MonoBehaviour
         particleSystem.Stop();
         vc = GetComponent<VisualController>();
         vc.OnPressed += _ => OnClicked();
-       // CoinCount = PlayerPrefs.GetInt("CoinCount");
+       
         healthSystem = GameObject.Find("HealthManager").GetComponent<HealthSystem>();
         healthSystem.initHealth();
         
@@ -179,7 +179,7 @@ public class TilesTouching : MonoBehaviour
                 
 
                
-                healthSystem.showVirusFirst();
+               // healthSystem.showVirusFirst();
                
 
 
@@ -206,7 +206,7 @@ public class TilesTouching : MonoBehaviour
                     vc.audioSource.clip = vc.audioClips[1];
                     vc.audioSource.Play();
 
-                    //CoinCount = CoinCount + 1;
+                 
                     centerPos = GameObject.Find("17");
 
                     if (name.Equals(coin.ToString()))
@@ -352,9 +352,8 @@ public class TilesTouching : MonoBehaviour
                 }
                 if (!unBlockList1.Contains(civilian1) && !unBlockList2.Contains(civilian1) && disableList.Contains(civilian1) && (c1.Equals(civilian1) || (c2.Equals(civilian1) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(civilian1) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(civilian1)))
                 {
-                    vc.audioSource.clip = vc.audioClips[8];
-                    vc.audioSource.Play();
-                    healthSystem.textShowValidation("HELP!!!");
+                    healthSystem.helpAudio("C1");
+                    textShowValidation("C1");
                     GameObject.Find(civilian1.ToString()).GetComponent<SpriteRenderer>().sprite = unMaskCivilianSprites[PlayerPrefs.GetInt("UnMaskCivilian")];
                     GameObject.Find(civilian1.ToString()).GetComponent<VisualController>().isUnlocked = true;
                     disableList.Remove(civilian1);
@@ -365,9 +364,8 @@ public class TilesTouching : MonoBehaviour
 
                 if (!unBlockList1.Contains(civilian2) && !unBlockList2.Contains(civilian2) && disableList.Contains(civilian2) && (c1.Equals(civilian2) || (c2.Equals(civilian2) && !name.Equals("5") && !name.Equals("10") && !name.Equals("15") && !name.Equals("20") && !name.Equals("25") && !name.Equals("30")) || (c3.Equals(civilian2) && !name.Equals("4") && !name.Equals("9") && !name.Equals("14") && !name.Equals("19") && !name.Equals("24") && !name.Equals("29")) || c4.Equals(civilian2)))
                 {
-                    vc.audioSource.clip = vc.audioClips[8];
-                    vc.audioSource.Play();
-                    healthSystem.textShowValidation("HELP!!!");
+                    healthSystem.helpAudio("C2");
+                    textShowValidation("C2");
                     GameObject.Find(civilian2.ToString()).GetComponent<SpriteRenderer>().sprite = maskCivilianSprites[PlayerPrefs.GetInt("MaskCivilian")];
                     GameObject.Find(civilian2.ToString()).GetComponent<VisualController>().isUnlocked = true;
                     disableList.Remove(civilian2);
@@ -571,29 +569,33 @@ public class TilesTouching : MonoBehaviour
 
         GameObject virDefenceText = GameObject.Find(name.ToString()).transform.Find("VirusDefence").gameObject;
 
+        GameObject topSprite = GameObject.Find(name.ToString()).transform.Find("TopSprite").gameObject;
+
+        
+
 
 
         MonsterHitValue = MonsterHitValue - 5;
 
 
 
-        virAttackText.GetComponent<TextMesh>().text = "A-5";
-        virDefenceText.GetComponent<TextMesh>().text = "H -" + MonsterHitValue.ToString();
+        virAttackText.GetComponent<TextMesh>().text = "5";
+        virDefenceText.GetComponent<TextMesh>().text = MonsterHitValue.ToString();
 
         if (MonsterHitValue == 0)
         {
 
-           
-
-            GameObject monster1Pos = GameObject.Find(Monster1.ToString());
+            MonsterHitValue = 10;
+             GameObject monster1Pos = GameObject.Find(Monster1.ToString());
             GameObject monster2Pos = GameObject.Find(Monster2.ToString());
 
             virAttackText.SetActive(false);
             virDefenceText.SetActive(false);
+            topSprite.SetActive(false);
 
 
 
-            GameObject.Find(name).GetComponent<Animator>().enabled = false;
+            // GameObject.Find(name).GetComponent<Animator>().enabled = false;
 
 
             GameObject.Find(name).GetComponent<SpriteRenderer>().sprite = sand;
@@ -619,17 +621,15 @@ public class TilesTouching : MonoBehaviour
                     }
                     else if (!unBlockList2.Contains(unBlockList1[i]) && unBlockList1[i] == civilian1)
                     {
-                        vc.audioSource.clip = vc.audioClips[8];
-                        vc.audioSource.Play();
-                        healthSystem.textShowValidation("HELP!!!");
+                        healthSystem.helpAudio("C1");
+                        textShowValidation("C1");
                         GameObject.Find(unBlockList1[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
                         GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = unMaskCivilianSprites[PlayerPrefs.GetInt("UnMaskCivilian")];
                     }
                     else if (!unBlockList2.Contains(unBlockList1[i]) && unBlockList1[i] == civilian2)
                     {
-                        vc.audioSource.clip = vc.audioClips[8];
-                        vc.audioSource.Play();
-                        healthSystem.textShowValidation("HELP!!!");
+                        healthSystem.helpAudio("C2");
+                        textShowValidation("C2");
                         GameObject.Find(unBlockList1[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
                         GameObject.Find(unBlockList1[i].ToString()).GetComponent<SpriteRenderer>().sprite = maskCivilianSprites[PlayerPrefs.GetInt("MaskCivilian")];
                     }
@@ -698,18 +698,16 @@ public class TilesTouching : MonoBehaviour
                     }
                     else if (!unBlockList1.Contains(unBlockList2[i]) && unBlockList2[i] == civilian1)
                     {
-                        vc.audioSource.clip = vc.audioClips[8];
-                        vc.audioSource.Play();
-                        healthSystem.textShowValidation("HELP!!!");
+                        healthSystem.helpAudio("C1");
+                        textShowValidation("C1");
                         GameObject.Find(unBlockList2[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
                         GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = unMaskCivilianSprites[PlayerPrefs.GetInt("UnMaskCivilian")];
                       
                     }
                     else if (!unBlockList1.Contains(unBlockList2[i]) && unBlockList2[i] == civilian2)
                     {
-                        vc.audioSource.clip = vc.audioClips[8];
-                        vc.audioSource.Play();
-                        healthSystem.textShowValidation("HELP!!!");
+                        healthSystem.helpAudio("C2");
+                        textShowValidation("C2");
                         GameObject.Find(unBlockList2[i].ToString()).GetComponent<VisualController>().isUnlocked = true;
                         GameObject.Find(unBlockList2[i].ToString()).GetComponent<SpriteRenderer>().sprite = maskCivilianSprites[PlayerPrefs.GetInt("MaskCivilian")];
                     }
@@ -783,17 +781,25 @@ public class TilesTouching : MonoBehaviour
 
 
 
-        GameObject.Find(Monster2.ToString()).GetComponent<Animator>().enabled = true;
+       // GameObject.Find(Monster2.ToString()).GetComponent<Animator>().enabled = true;
 
         GameObject virAttackText = GameObject.Find(Monster2.ToString()).transform.Find("VirusAttack").gameObject;
 
         GameObject virDefenceText = GameObject.Find(Monster2.ToString()).transform.Find("VirusDefence").gameObject;
 
+        GameObject topSprite = GameObject.Find(Monster2.ToString()).transform.Find("TopSprite").gameObject;
+
+        topSprite.SetActive(true);
+
+        DOTween.Sequence()
+             .Append(topSprite.transform.DOPunchScale(Vector3.one * 0.03f * 3, 1f, vibrato: 2, elasticity: 3f))
+             .AppendInterval(0.1f).SetLoops(-1);
+
         virAttackText.SetActive(true);
         virDefenceText.SetActive(true);
 
-        virAttackText.GetComponent<TextMesh>().text = "A-5".ToString();
-        virDefenceText.GetComponent<TextMesh>().text = "H-" + MonsterHitValue.ToString();
+        virAttackText.GetComponent<TextMesh>().text = "5".ToString();
+        virDefenceText.GetComponent<TextMesh>().text = MonsterHitValue.ToString();
 
 
         List<int> mList = new List<int>();
@@ -914,17 +920,25 @@ public class TilesTouching : MonoBehaviour
         GameObject.Find(Monster1.ToString()).GetComponent<VisualController>().isUnlocked = true;
 
 
-        GameObject.Find(Monster1.ToString()).GetComponent<Animator>().enabled = true;
+        //GameObject.Find(Monster1.ToString()).GetComponent<Animator>().enabled = true;
 
         GameObject virAttackText = GameObject.Find(Monster1.ToString()).transform.Find("VirusAttack").gameObject;
 
         GameObject virDefenceText = GameObject.Find(Monster1.ToString()).transform.Find("VirusDefence").gameObject;
 
+        GameObject topSprite = GameObject.Find(Monster1.ToString()).transform.Find("TopSprite").gameObject;
+
+        topSprite.SetActive(true);
+
+        DOTween.Sequence()
+            .Append(topSprite.transform.DOPunchScale(Vector3.one * 0.03f * 3, 1f, vibrato: 2, elasticity: 3f))
+            .AppendInterval(0.1f).SetLoops(-1);
+
         virAttackText.SetActive(true);
         virDefenceText.SetActive(true);
 
-        virAttackText.GetComponent<TextMesh>().text = "A-5".ToString();
-        virDefenceText.GetComponent<TextMesh>().text = "H-" + MonsterHitValue.ToString();
+        virAttackText.GetComponent<TextMesh>().text = "5".ToString();
+        virDefenceText.GetComponent<TextMesh>().text = MonsterHitValue.ToString();
 
 
 
@@ -1039,10 +1053,43 @@ public class TilesTouching : MonoBehaviour
         disableList.Remove(Monster1);
     }
 
-   
 
 
-      IEnumerator delayPopup(string name) {
+    public void textShowValidation(string civilianType)
+    {
+
+
+        StartCoroutine(textValidation(civilianType));
+
+    }
+
+    IEnumerator textValidation(string civilianType)
+    {
+
+        GameObject helpObj;
+
+        if (civilianType.Equals("C1")) { 
+            helpObj = GameObject.Find(civilian1.ToString()).transform.Find("HelpSprite").gameObject; 
+        } 
+        else { 
+            helpObj = GameObject.Find(civilian2.ToString()).transform.Find("HelpSprite").gameObject; 
+        }
+      
+
+        helpObj.SetActive(true);
+        DOTween.Sequence()
+              .Append(helpObj.transform.DOPunchScale(Vector3.one * 0.03f * 3, 1f, vibrato: 2, elasticity: 3f))
+              .AppendInterval(0.1f).SetLoops(-1);
+
+        yield return new WaitForSeconds(1f);
+
+        helpObj.SetActive(false);
+
+    }
+
+
+
+        IEnumerator delayPopup(string name) {
 
         var panel = GameObject.Find("Canvas_Popup");
 
