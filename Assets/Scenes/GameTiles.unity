@@ -511,14 +511,22 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e7461585a3870704b9a16792a57849d5, type: 3}
   - {fileID: 21300000, guid: c7b3fac598481d54399552bb87f509a0, type: 3}
   - {fileID: 21300000, guid: eefe1f3d436984c49b9a371689bbb626, type: 3}
-  audioClips:
-  - {fileID: 8300000, guid: b13a523da12698745adaa4d8045aab04, type: 3}
-  - {fileID: 8300000, guid: dd42dca83dfce404589f61e9dc943520, type: 3}
-  - {fileID: 8300000, guid: 08555c8067af6544582e4e359ed3c96e, type: 3}
-  - {fileID: 8300000, guid: 033a06ffc3d2ff349ad49cb4dde195d4, type: 3}
-  - {fileID: 8300000, guid: 47e03febe33ec2743b11816f67111e34, type: 3}
-  - {fileID: 8300000, guid: d773c68f0ba40c44297bb6e37abda65f, type: 3}
-  - {fileID: 8300000, guid: 5927663847b555a45aa3bc1d2a469658, type: 3}
+  helpaudioClips:
+  - {fileID: 8300000, guid: 9ffd1f8fa7902704f9a29b4cbe764fba, type: 3}
+  - {fileID: 8300000, guid: 6966a58278a623f428f9c6df72ba52e6, type: 3}
+  - {fileID: 8300000, guid: c4bf62b67046290458acbbd9dc2dca66, type: 3}
+  - {fileID: 8300000, guid: 905a88e639cba4141b03cc3285c3445a, type: 3}
+  - {fileID: 8300000, guid: 74f27a344ea590b4ea0d0e6a56ea6a72, type: 3}
+  - {fileID: 8300000, guid: 464593fda6a279e4dbfac1a3e44e7879, type: 3}
+  - {fileID: 8300000, guid: 9a2c6a30e41e751429d4ed58fcb04612, type: 3}
+  thankYouAudioClips:
+  - {fileID: 8300000, guid: 4b24e357460073a4ca9dba557c5c9a6e, type: 3}
+  - {fileID: 8300000, guid: 518bbbd9026983f44a066c749e9cc183, type: 3}
+  - {fileID: 8300000, guid: 09f588be50d4b294085d77cc7daf640e, type: 3}
+  - {fileID: 8300000, guid: a1607c4887db04548902eaf828fb18bd, type: 3}
+  - {fileID: 8300000, guid: 3568ea59991b4674d834aedc345e10ca, type: 3}
+  - {fileID: 8300000, guid: ace5bf6c517e2da459cf8823f266da72, type: 3}
+  - {fileID: 8300000, guid: 411a0a8d8e5fa714f9515b5d46e8f6dc, type: 3}
   audioSource: {fileID: 1455464272}
 --- !u!4 &39227526
 Transform:
@@ -30715,6 +30723,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1468187105, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
+      propertyPath: MonsterSprites.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1468187105, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
+      propertyPath: MonsterSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: ff821bdc8d5a71740a6ad965a23692e9, type: 3}
+    - target: {fileID: 1468187105, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
+      propertyPath: MonsterSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7e39d2d403a05474a84584032b171a30, type: 3}
     - target: {fileID: 1023538968527713779, guid: 3b1b8f4ab508d0d4b9682140ef9a524c, type: 3}
       propertyPath: m_Name
       value: 1

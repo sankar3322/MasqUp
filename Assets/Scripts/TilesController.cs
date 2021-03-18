@@ -125,6 +125,10 @@ public class TilesController : MonoBehaviour
 
         PlayerPrefs.SetInt("UnMaskCivilian", UnityEngine.Random.Range(0, 7));
 
+        PlayerPrefs.SetInt("RandomMonster1", UnityEngine.Random.Range(0, 6));
+
+        PlayerPrefs.SetInt("RandomMonster2", UnityEngine.Random.Range(0, 6));
+
         Debug.Log("MaskCivilianValue.............."+PlayerPrefs.GetInt("MaskCivilian")+ "UnMaskCivilianValue.............." + PlayerPrefs.GetInt("UnMaskCivilian"));
 
         PlayerPrefs.SetInt("Key", key);

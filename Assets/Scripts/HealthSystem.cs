@@ -40,7 +40,8 @@ public class HealthSystem : MonoBehaviour
 
     public Sprite[] sadCivilianSprites, happyCivilianSprites, maskPopupSprites;
 
-    public List<AudioClip> audioClips = new List<AudioClip>();
+    public List<AudioClip> helpaudioClips = new List<AudioClip>();
+    public List<AudioClip> thankYouAudioClips = new List<AudioClip>();
     public AudioSource audioSource;
 
 
@@ -412,8 +413,8 @@ public class HealthSystem : MonoBehaviour
                 textUpdate(civilianCountText);
                 Debug.Log("Civilian Count" + PlayerPrefs.GetInt("CIVILIAN_COUNT"));
                 isInfected = false;
-                vc.audioSource.clip = vc.audioClips[1];
-                 vc.audioSource.Play();
+             /*   vc.audioSource.clip = vc.audioClips[1];
+                 vc.audioSource.Play();*/
 
             
             }
@@ -461,11 +462,11 @@ public class HealthSystem : MonoBehaviour
 
         if (civilianType.Equals("C1"))
         {
-            audioSource.clip = audioClips[PlayerPrefs.GetInt("UnMaskCivilian")];
+            audioSource.clip = helpaudioClips[PlayerPrefs.GetInt("UnMaskCivilian")];
             audioSource.Play();
         }
         else {
-            audioSource.clip = audioClips[PlayerPrefs.GetInt("MaskCivilian")];
+            audioSource.clip = helpaudioClips[PlayerPrefs.GetInt("MaskCivilian")];
             audioSource.Play();
         }
          
@@ -480,6 +481,16 @@ public class HealthSystem : MonoBehaviour
     public void thankyouShowValidation()
     {
 
+        if (civilianType.Equals("C1"))
+        {
+            audioSource.clip = thankYouAudioClips[PlayerPrefs.GetInt("UnMaskCivilian")];
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.clip = thankYouAudioClips[PlayerPrefs.GetInt("MaskCivilian")];
+            audioSource.Play();
+        }
 
         StartCoroutine(textValidation());
 

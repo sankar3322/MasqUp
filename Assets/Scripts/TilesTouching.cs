@@ -36,6 +36,8 @@ public class TilesTouching : MonoBehaviour
 
     public Sprite[] unMaskCivilianSprites;
 
+    public Sprite[] MonsterSprites;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -789,6 +791,9 @@ public class TilesTouching : MonoBehaviour
 
         GameObject topSprite = GameObject.Find(Monster2.ToString()).transform.Find("TopSprite").gameObject;
 
+
+        topSprite.GetComponent<SpriteRenderer>().sprite = MonsterSprites[PlayerPrefs.GetInt("RandomMonster2")];
+
         topSprite.SetActive(true);
 
         DOTween.Sequence()
@@ -929,6 +934,7 @@ public class TilesTouching : MonoBehaviour
         GameObject topSprite = GameObject.Find(Monster1.ToString()).transform.Find("TopSprite").gameObject;
 
         topSprite.SetActive(true);
+        topSprite.GetComponent<SpriteRenderer>().sprite = MonsterSprites[PlayerPrefs.GetInt("RandomMonster1")];
 
         DOTween.Sequence()
             .Append(topSprite.transform.DOPunchScale(Vector3.one * 0.03f * 3, 1f, vibrato: 2, elasticity: 3f))

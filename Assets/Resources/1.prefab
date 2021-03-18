@@ -338,6 +338,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 660450f4a23063f40a3fb5faf9817299, type: 3}
   - {fileID: 21300000, guid: 3a36ba480c915e7419ba63e3f3f9567b, type: 3}
   - {fileID: 21300000, guid: 85d13c9cc1f0f3e459d658b169d0f2cf, type: 3}
+  MonsterSprites:
+  - {fileID: 21300000, guid: ff821bdc8d5a71740a6ad965a23692e9, type: 3}
+  - {fileID: 21300000, guid: 7e39d2d403a05474a84584032b171a30, type: 3}
+  - {fileID: 21300000, guid: 10e2b0ebbe3e32d428078a4bb0769c72, type: 3}
+  - {fileID: 21300000, guid: 462107c899fc75c49a0bbaa3978d118e, type: 3}
+  - {fileID: 21300000, guid: a7505bebab6dd90459f15c2755ecdc9a, type: 3}
+  - {fileID: 21300000, guid: 5453f6a3e17dee94580e5b8774b33f2f, type: 3}
 --- !u!114 &1692436183792292737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5239,8 +5246,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5054887795075540074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.163, z: 0}
-  m_LocalScale: {x: 0.5285017, y: 0.5285017, z: 0.5285017}
+  m_LocalPosition: {x: 0, y: 0.271, z: 0}
+  m_LocalScale: {x: 0.40580052, y: 0.40580052, z: 0.40580052}
   m_Children: []
   m_Father: {fileID: 6999530124164696919}
   m_RootOrder: 2
@@ -5285,7 +5292,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7c5c4c9c00e753f48bf04375f2a59d88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff821bdc8d5a71740a6ad965a23692e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
