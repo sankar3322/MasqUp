@@ -38,7 +38,7 @@ public class HealthSystem : MonoBehaviour
    
 
 
-    public Sprite[] sadCivilianSprites, happyCivilianSprites, maskPopupSprites;
+    public Sprite[] sadCivilianSprites, happyCivilianSprites, maskPopupSprites, infectedMaskCivilians, infectedUnMaskCivilians;
 
     public List<AudioClip> helpaudioClips = new List<AudioClip>();
     public List<AudioClip> thankYouAudioClips = new List<AudioClip>();
@@ -431,9 +431,24 @@ public class HealthSystem : MonoBehaviour
         Debug.Log(isInfected);
         if (!isInfected)
         {
-           
+
+
+
             Debug.Log("Civilian Count" + PlayerPrefs.GetInt("CIVILIAN_COUNT"));
 
+        }
+        else {
+
+            if (civilianType.Equals("C1"))
+            {
+                GameObject.Find(PlayerPrefs.GetInt("Civilian1").ToString()).GetComponent<SpriteRenderer>().sprite = infectedUnMaskCivilians[PlayerPrefs.GetInt("UnMaskCivilian")];
+
+            }
+            else {
+                GameObject.Find(PlayerPrefs.GetInt("Civilian2").ToString()).GetComponent<SpriteRenderer>().sprite = infectedMaskCivilians[PlayerPrefs.GetInt("MaskCivilian")];
+
+            }
+        
         }
       
         unblockList1 = tilesController.unBlockList1;
