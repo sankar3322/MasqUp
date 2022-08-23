@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1837588761}
     m_Modifications:
+    - target: {fileID: 1487156155, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1837588762}
     - target: {fileID: 9124133667540917782, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
       propertyPath: audioSource
       value: 
@@ -222,34 +226,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SplashPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 9124133668294867740, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: db3702ff35f8d2b46ab88bae9a3c79a1, type: 3}
-    - target: {fileID: 9124133668294867741, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 79
-      objectReference: {fileID: 0}
-    - target: {fileID: 9124133668294867741, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 743.6559
-      objectReference: {fileID: 0}
-    - target: {fileID: 9124133668294867741, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 270
-      objectReference: {fileID: 0}
-    - target: {fileID: 9124133668294867741, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 837.4386
-      objectReference: {fileID: 0}
     - target: {fileID: 9124133668294867742, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1837588762}
-    - target: {fileID: 9124133668294867742, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
-      propertyPath: closeDuration
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9124133668882431686, guid: 67029421c001d4ac9b99cd7c883a4f12, type: 3}
       propertyPath: audioSource
       value: 
@@ -420,7 +400,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
