@@ -12,23 +12,13 @@ public class VisualController : MonoBehaviour
     [SerializeField] Ease openEase = Ease.OutBack, closeEase = Ease.Linear;
     [SerializeField] bool activeAtStart, disableOnClick, isPulsing;
     [SerializeField] List<AudioClip> appearSFX, pressSFX;
-
-
-
     public List<int> unBlockList1;
     public List<int> unBlockList2;
-
-
     public delegate void PressedEvent(VisualController vc);
     public PressedEvent OnPressed;
-
-
-   
-
     public bool isUnlocked, isClicked;
     public List<AudioClip> audioClips = new List<AudioClip>();
     public AudioSource audioSource;
-    
     Button button;
     Vector3 activeScale;
     bool isShowing = false;
@@ -90,27 +80,20 @@ public class VisualController : MonoBehaviour
         TilesController tilesController = go.GetComponent<TilesController>();
         unBlockList1 = tilesController.unBlockList1;
         unBlockList2 = tilesController.unBlockList2;
-
-
-        if (!tilesController.isPopup) { 
-        if (!isClicked && isUnlocked)
+        if (!tilesController.isPopup)
         {
-
-            Clicked();
-
-        }
-        else
-        {
-
-            if (unBlockList1.Contains(int.Parse(name)) || unBlockList2.Contains(int.Parse(name)))
+            if (!isClicked && isUnlocked)
+                Clicked();
+            else
             {
-                audioSource.clip = audioClips[4];
-                audioSource.Play();
+                if (unBlockList1.Contains(int.Parse(name)) || unBlockList2.Contains(int.Parse(name)))
+                {
+                    audioSource.clip = audioClips[4];
+                    audioSource.Play();
+                }
+                Debug.Log("Name....." + name + "  Unblock1.........." + unBlockList1.Count + "     Unblock2" + unBlockList2.Count);
             }
-            Debug.Log("Name....." + name + "  Unblock1.........." + unBlockList1.Count + "     Unblock2" + unBlockList2.Count);
-
         }
-    }
     }
 
     public void Clicked()
@@ -124,11 +107,8 @@ public class VisualController : MonoBehaviour
     public void Pulse()
     {
         transform.DOScale(activeScale, closeDuration).SetEase(closeEase);
-
         DOTween.Sequence()
             .Append(transform.DOPunchScale(Vector3.one * punchScale * 3, 1f, vibrato: 1, elasticity: 5f))
             .AppendInterval(0.1f).SetLoops(-1);
-
-       
     }
 }

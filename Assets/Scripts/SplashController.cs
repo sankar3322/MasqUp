@@ -12,18 +12,12 @@ public class SplashController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.GetInt("CoinCount") == 0 && PlayerPrefs.GetInt("Infection")==0)
-        {
+        if (PlayerPrefs.GetInt("CoinCount") == 0 && PlayerPrefs.GetInt("Infection") == 0)
             contineButton.SetActive(false);
-
-        }
-        else {
-
+        else
             contineButton.SetActive(true);
-        }
         continueBtn.OnPressed += _ => LoadContinueGame();
         newGameBtn.OnPressed += _ => LoadNewGame();
-
     }
 
     void LoadContinueGame()
@@ -33,13 +27,12 @@ public class SplashController : MonoBehaviour
 
     void LoadNewGame()
     {
-
-        PlayerPrefs.SetInt("CoinCount",0);
+        PlayerPrefs.SetInt("CoinCount", 0);
         PlayerPrefs.SetInt("Infection", 0);
         PlayerPrefs.SetInt("Level", 1);
         PlayerPrefs.SetInt("CIVILIAN_COUNT", 0);
         PlayerPrefs.SetInt("MEDICINE", 2);
-        PlayerPrefs.SetInt("DEFENCE",5);
+        PlayerPrefs.SetInt("DEFENCE", 5);
         PlayerPrefs.SetInt("ATTACK", 5);
         PlayerPrefs.SetString("MASK_TYPE", "My first Mask");
         SceneManager.LoadScene(1);

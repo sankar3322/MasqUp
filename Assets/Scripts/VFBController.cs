@@ -11,9 +11,7 @@ public class VFBController : MonoBehaviour
     {
         if (VFBController.VFB == null) VFBController.VFB = this;
         else
-        {
             if (VFBController.VFB != this) Destroy(this.gameObject);
-        }
         DontDestroyOnLoad(this.gameObject);
     }
 
